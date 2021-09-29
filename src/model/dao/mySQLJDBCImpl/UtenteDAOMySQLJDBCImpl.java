@@ -11,7 +11,6 @@ import model.dao.exception.DuplicatedObjectException;
 import model.mo.Utente;
 import model.dao.UtenteDAO;
 
-
 public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 	
 	private final String COUNTER_ID = "userID";
@@ -201,11 +200,11 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 					= " SELECT * "
 					+ " FROM utente "
 					+ " WHERE "
-					+ " username = ? AND "
-					+ " deleted = 'N' ";
+					+ " username = ?"
+					+ " AND deleted = 'N' ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, utente.getUsername());
+			ps.setString(1, username);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -238,7 +237,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 					+ " deleted = 'N' ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, utente.getEmail());
+			ps.setString(1, email);
 			
 			ResultSet resultSet = ps.executeQuery();
 			

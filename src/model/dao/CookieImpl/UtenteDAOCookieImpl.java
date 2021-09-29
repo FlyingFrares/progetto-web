@@ -9,7 +9,6 @@ import model.mo.Utente;
 
 import java.util.List;
 
-
 public class UtenteDAOCookieImpl implements UtenteDAO {
 	
 	HttpServletRequest request;

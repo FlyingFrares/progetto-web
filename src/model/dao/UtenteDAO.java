@@ -28,9 +28,4 @@ public interface UtenteDAO {
 	
 	public List<Utente> findAll();
 	
-	/*
-	public void setAdmin(Utente utente);
-	findByUserID;
-	*/
-	
 }

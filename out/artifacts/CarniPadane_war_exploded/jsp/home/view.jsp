@@ -11,10 +11,10 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <%@include file="/include/htmlHead.inc"%>
+    <%@include file="/include/htmlHead.jsp"%>
   </head>
   <body>
-    <%@include file="/include/header.inc"%>
+    <%@include file="/include/header.jsp"%>
     <main>
       <div id="site_content">
         <div class="sidebar">
@@ -29,14 +29,10 @@
               <line x1="21" y1="21" x2="15" y2="15" />
             </svg>
           </form>
-          <h3>Latest News</h3>
+          <h3>Ultime notizie</h3>
           <h4>New Website Launched</h4>
           <h5>August 1st, 2013</h5>
-          <p>2013 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
-          <p></p>
-          <h4>New Website Launched</h4>
-          <h5>August 1st, 2013</h5>
-          <p>2013 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <h3>Useful Links</h3>
           <ul>
             <li><a href="#">link 1</a></li>
@@ -47,11 +43,18 @@
         </div>
         <div id="content">
           <!-- insert the page content here -->
-          <h1>Welcome to the textured_blue template</h1>
-          <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 Licence</a>), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than that...</p>
-          <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
-          <p>You can view more free HTML5 web templates <a href="http://www.html5webtemplates.co.uk">here</a>.</p>
-          <p>This template is a fully functional 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design.</p>
+
+          <div class="grid-container">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
+          </div>
           <h2>Browser Compatibility</h2>
           <p>This template has been tested in the following browsers:</p>
           <ul>
@@ -63,6 +66,6 @@
         </div>
       </div>
     </main>
-    <%@include file="/include/footer.inc"%>
+    <%@include file="/include/footer.jsp"%>
   </body>
 </html>
