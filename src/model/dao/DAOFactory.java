@@ -2,7 +2,6 @@ package model.dao;
 
 import model.dao.mySQLJDBCImpl.MySQLJDBCDAOFactory;
 import model.dao.CookieImpl.CookieDAOFactory;
-import model.mo.*;
 
 import java.util.Map;
 

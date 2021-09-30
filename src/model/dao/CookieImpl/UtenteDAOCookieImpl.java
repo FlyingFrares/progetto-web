@@ -83,8 +83,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 	}
 	
 	@Override
-	public Utente findByUsername(String username) {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public Utente findByUsername(String username) {	throw new UnsupportedOperationException("Not supported yet.");
 	}
 	
 	@Override

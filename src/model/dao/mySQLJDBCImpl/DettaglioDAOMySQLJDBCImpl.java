@@ -193,7 +193,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " detailID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, dettaglio.getDetailID());
+			ps.setLong(1, detailID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -207,7 +207,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			throw new RuntimeException(e);
 		}
 		
-		return null;
+		return dettaglio;
 	}
 	
 	@Override
@@ -226,7 +226,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " orderID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, dettaglio.getOrder().getOrderID());
+			ps.setLong(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -258,7 +258,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, dettaglio.getProduct().getProductID());
+			ps.setLong(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			

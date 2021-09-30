@@ -210,7 +210,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " deleted = 'N' ";
 				
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, ordine.getOrderID());
+			ps.setLong(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -244,7 +244,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " deleted = 'N' ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, ordine.getUser().getUserID());
+			ps.setLong(1, userID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			

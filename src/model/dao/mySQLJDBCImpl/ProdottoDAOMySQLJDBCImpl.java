@@ -208,7 +208,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " WHERE productID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, prodotto.getProductID());
+			ps.setLong(1, productID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -240,7 +240,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " productID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, prodotto.getProductID());
+			ps.setLong(1, productID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -275,9 +275,9 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " ORDER BY categoria, nome ";
 					
 					ps = conn.prepareStatement(sql);
-					ps.setString(1, "%" + prodotto.getNomeProdotto() + "%");
-					ps.setString(2, "%" + prodotto.getMarchio() + "%");
-					ps.setString(3, "%" + prodotto.getCategoria() + "%");
+					ps.setString(1, "%" + searchString + "%");
+					ps.setString(2, "%" + searchString + "%");
+					ps.setString(3, "%" + searchString + "%");
 					
 					ResultSet resultSet = ps.executeQuery();
 					
