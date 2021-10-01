@@ -23,11 +23,6 @@
           <form name="searchForm" action="Dispatcher" method="post">
             <input class="search" type="text" name="search" placeholder="Ricerca" maxlength="40" required>
             <input type="hidden" name="controllerAction" value="HomeManagement.search"/>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E3138" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <circle cx="10" cy="10" r="7" />
-              <line x1="21" y1="21" x2="15" y2="15" />
-            </svg>
           </form>
           <h3>Ultime notizie</h3>
           <h4>New Website Launched</h4>
@@ -43,17 +38,60 @@
         </div>
         <div id="content">
           <!-- insert the page content here -->
+          <div class="slideshow-container">
 
-          <div class="grid-container">
-            <div class="grid-item">1</div>
-            <div class="grid-item">2</div>
-            <div class="grid-item">3</div>
-            <div class="grid-item">4</div>
-            <div class="grid-item">5</div>
-            <div class="grid-item">6</div>
-            <div class="grid-item">7</div>
-            <div class="grid-item">8</div>
-            <div class="grid-item">9</div>
+            <div class="mySlides fade">
+              <img src="images/cesta3.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+              <img src="images/cesta4.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+              <img src="images/cesta5.jpg" style="width:100%">
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+          </div>
+          <br>
+
+          <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+
+          <script>
+              var slideIndex = 1;
+              showSlides(slideIndex);
+
+              function plusSlides(n) {
+                  showSlides(slideIndex += n);
+              }
+
+              function currentSlide(n) {
+                  showSlides(slideIndex = n);
+              }
+
+              function showSlides(n) {
+                  var i;
+                  var slides = document.getElementsByClassName("mySlides");
+                  var dots = document.getElementsByClassName("dot");
+                  if (n > slides.length) {slideIndex = 1}
+                  if (n < 1) {slideIndex = slides.length}
+                  for (i = 0; i < slides.length; i++) {
+                      slides[i].style.display = "none";
+                  }
+                  for (i = 0; i < dots.length; i++) {
+                      dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";
+                  dots[slideIndex-1].className += " active";
+              }
+          </script>
           </div>
           <h2>Browser Compatibility</h2>
           <p>This template has been tested in the following browsers:</p>

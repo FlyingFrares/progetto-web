@@ -56,9 +56,10 @@
       </li>
 
       <%if (loggedOn) {%>
-      <li <%=menuActiveLink.equals("Rubrica")?"class=\"active\"":""%>>
-        <a href="Dispatcher?controllerAction=Home.view">Rubrica</a>
+      <li <%=menuActiveLink.equals("Ordini")?"class=\"active\"":""%>>
+        <a href="Dispatcher?controllerAction=Home.view">Ordini</a>
       </li>
+      <!--%if(loggedUser.getAdmin().equals("c")){%-->
       <li><a href="javascript:logoutForm.submit()">Logout</a></li>
       <%}%>
 
@@ -73,7 +74,7 @@
         </form>
       </section>
       <%}else{%>
-      <h1>Bentornato <%=loggedUser.getUsername()%></h1>
+      <h1>Bentornato <%=loggedUser.getAdmin()%></h1>
       <%}%>
     </ul>
   </nav>
