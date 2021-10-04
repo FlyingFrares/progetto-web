@@ -33,6 +33,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 		loggedUser.setUserID(userID);
 		loggedUser.setNome(nome);
 		loggedUser.setCognome(cognome);
+		loggedUser.setAdmin(admin);
 		
 		Cookie cookie;
 		cookie = new Cookie("loggedUser", encode(loggedUser));

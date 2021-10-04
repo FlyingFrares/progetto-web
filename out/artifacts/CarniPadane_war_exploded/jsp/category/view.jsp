@@ -1,135 +1,129 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@page session="false"%>
+<%@page import="model.mo.Utente"%>
 
+<%
+  boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+  Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+  String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
+  String menuActiveLink = "Prodotti";
+%>
+
+<!DOCTYPE HTML>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>The Affable Bean</title>
-    </head>
-    <body>
-        <div id="main">
-            <div id="header">
-                <div id="widgetBar">
+  <style>
+    .filterDiv {float: left;
+      background-color: #2196F3;
+      color: #ffffff;
+      width: 100px;
+      line-height: 100px;
+      text-align: center;
+      margin: 2px;
+      display: none;
+    }
 
-                    <div class="headerWidget">
-                        [ language toggle ]
-                    </div>
+    .show {
+      display: block;
+    }
 
-                    <div class="headerWidget">
-                        [ checkout button ]
-                    </div>
+    .container {
+      margin-top: 20px;
+      overflow: hidden;
+    }
 
-                    <div class="headerWidget">
-                        [ shopping cart widget ]
-                    </div>
+    /* Style the buttons */
+    .btn {
+      border: none;
+      outline: none;
+      padding: 12px 16px;
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
 
-                </div>
+    .btn:hover {
+      background-color: #ddd;
+    }
 
-                <a href="#">
-                    <img src="#" id="logo" alt="Affable Bean logo">
-                </a>
+    .btn.active {
+      background-color: #666;
+      color: white;
+    }
+  </style>
+  <head>
+    <%@include file="/include/htmlHead.jsp"%>
+  </head>
+  <body>
+    <%@include file="/include/header.jsp"%>
+    <h2>Filter DIV Elements</h2>
+    <div id="myBtnContainer">
+      <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+      <button class="btn" onclick="filterSelection('cars')"> Cars</button>
+      <button class="btn" onclick="filterSelection('animals')"> Animals</button>
+      <button class="btn" onclick="filterSelection('fruits')"> Fruits</button>
+      <button class="btn" onclick="filterSelection('colors')"> Colors</button>
+    </div>
 
-                <img src="#" id="logoText" alt="the affable bean">
-            </div>
+    <div class="container">
+      <div class="filterDiv cars">BMW</div>
+      <div class="filterDiv colors fruits">Orange</div>
+      <div class="filterDiv cars">Volvo</div>
+      <div class="filterDiv colors">Red</div>
+      <div class="filterDiv cars animals">Mustang</div>
+      <div class="filterDiv colors">Blue</div>
+      <div class="filterDiv animals">Cat</div>
+      <div class="filterDiv animals">Dog</div>
+      <div class="filterDiv fruits">Melon</div>
+      <div class="filterDiv fruits animals">Kiwi</div>
+      <div class="filterDiv fruits">Banana</div>
+      <div class="filterDiv fruits">Lemon</div>
+      <div class="filterDiv animals">Cow</div>
+    </div>
 
-            <div id="categoryLeftColumn">
-                <div class="categoryButton" id="selectedCategory">
-                    <span class="categoryText">dairy</span>
-                </div>
+    <script>
+        filterSelection("all")
+        function filterSelection(c) {
+            var x, i;
+            x = document.getElementsByClassName("filterDiv");
+            if (c == "all") c = "";
+            for (i = 0; i < x.length; i++) {
+                w3RemoveClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+            }
+        }
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">meats</span>
-                </a>
+        function w3AddClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+            }
+        }
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">bakery</span>
-                </a>
+        function w3RemoveClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">fruit & veg</span>
-                </a>
-            </div>
+        // Add active class to the current button (highlight it)
+        var btnContainer = document.getElementById("myBtnContainer");
+        var btns = btnContainer.getElementsByClassName("btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function(){
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+    </script>
 
-            <div id="categoryRightColumn">
-                <p id="categoryTitle">[ selected category ]</p>
-
-                <table id="productTable">
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="footer">
-                <hr>
-                <p id="footerText">[ footer text ]</p>
-            </div>
-        </div>
     </body>
-</html>
+    </html>
+
+

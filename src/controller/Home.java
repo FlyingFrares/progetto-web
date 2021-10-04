@@ -95,7 +95,7 @@ public class Home {
 				applicationMessage = "Username e password errati!";
 				loggedUser=null;
 			} else {
-				loggedUser = sessionUserDAO.create(user.getUserID(), null,null, null, user.getNome(), user.getCognome(),null);
+				loggedUser = sessionUserDAO.create(user.getUserID(), null,user.getAdmin(), null, user.getNome(), user.getCognome(),null);
 			}
 			
 			daoFactory.commitTransaction();
