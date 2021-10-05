@@ -9,12 +9,12 @@ import java.util.List;
 public interface ProdottoDAO {
 	
 	public Prodotto create (
-			Long productID,
+			int productID,
 			String nome,
 			String marchio,
 			String categoria,
 			String descrizione,
-			Long magazzino,
+			int magazzino,
 			BigDecimal prezzoKg,
 			BigDecimal peso,
 			BigDecimal prezzoTot) throws DuplicatedObjectException;
@@ -23,9 +23,11 @@ public interface ProdottoDAO {
 	
 	public void delete(Prodotto prodotto);
 	
-	public Long checkAvailability(Long productID);
+	public int checkAvailability(int productID);
 	
 	public Prodotto findByProductId(Long productID);
+	
+	public List<Prodotto> findByCategory(String category);
 	
 	public List<Prodotto> findByString(String searchString);
 	

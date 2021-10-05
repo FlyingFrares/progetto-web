@@ -25,10 +25,10 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	
 	@Override
 	public Dettaglio create(
-			Long detailID,
+			int detailID,
 			Ordine ordine,
 			Prodotto prodotto,
-			Long quantità,
+			int quantità,
 			BigDecimal subtotale) throws DuplicatedObjectException {
 		
 		PreparedStatement ps;
@@ -75,7 +75,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			resultSet = ps.executeQuery();
 			resultSet.next();
 			
-			dettaglio.setDetailID(resultSet.getLong("counterValue"));
+			dettaglio.setDetailID(resultSet.getInt("counterValue"));
 			
 			resultSet.close();
 			
@@ -278,19 +278,19 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 		
 		Dettaglio dettaglio = new Dettaglio();
 		try {
-			dettaglio.setDetailID(rs.getLong("detailID"));
+			dettaglio.setDetailID(rs.getInt("detailID"));
 		} catch (SQLException sqle) {
 		}
 		try {
-			dettaglio.getOrder().setOrderID(rs.getLong("orderID"));
+			dettaglio.getOrder().setOrderID(rs.getInt("orderID"));
 		} catch (SQLException sqle) {
 		}
 		try {
-			dettaglio.getProduct().setProductID(rs.getLong("productID"));
+			dettaglio.getProduct().setProductID(rs.getInt("productID"));
 		} catch (SQLException sqle) {
 		}
 		try {
-			dettaglio.setQuantità(rs.getLong("quantità"));
+			dettaglio.setQuantità(rs.getInt("quantità"));
 		} catch (SQLException sqle) {
 		}
 		try {

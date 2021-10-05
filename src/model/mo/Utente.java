@@ -1,8 +1,11 @@
 package model.mo;
 
+import java.sql.*;
+import java.math.*;
+
 public class Utente {
 	
-	private Long userID;
+	private int userID;
 	private String username;
 	private String admin;
 	private String password;
@@ -14,9 +17,9 @@ public class Utente {
 	/* 1:N */
 	private Ordine[] orders;
 	
-	public Long getUserID() { return this.userID; }
+	public int getUserID() { return this.userID; }
 	
-	public void setUserID(Long userID) { this.userID = userID; }
+	public void setUserID(int userID) { this.userID = userID; }
 	
 	public String getUsername() {
 		return this.username;

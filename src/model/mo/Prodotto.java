@@ -1,16 +1,17 @@
 package model.mo;
 
+import java.sql.*;
 import java.math.*;
 
 public class Prodotto {
 	
 	
-	private Long productID;
+	private int productID;
 	private String nomeProdotto;
 	private String marchio;
 	private String categoria;
 	private String descrizione;
-	private Long magazzino;
+	private int magazzino;
 	private BigDecimal prezzoKg;
 	private BigDecimal peso;
 	private BigDecimal prezzoTot;
@@ -18,10 +19,8 @@ public class Prodotto {
 	
 	
 	
-	public Long getProductID() {
-		return this.productID;
-	}
-	public void setProductID(Long productID) {
+	public int getProductID() { return this.productID; }
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
 	
@@ -53,19 +52,15 @@ public class Prodotto {
 		this.descrizione = descrizione;
 	}
 	
-	public Long getMagazzino() {
+	public int getMagazzino() {
 		return this.magazzino;
 	}
-	public void setMagazzino(Long magazzino) {
+	public void setMagazzino(int magazzino) {
 		this.magazzino = magazzino;
 	}
 	
-	public BigDecimal getPrezzoKg() {
-		return this.prezzoKg;
-	}
-	public void setPrezzoKg(BigDecimal prezzoKg) {
-		this.prezzoKg = prezzoKg;
-	}
+	public BigDecimal getPrezzoKg() { return this.prezzoKg; }
+	public void setPrezzoKg(BigDecimal prezzoKg) { this.prezzoKg = prezzoKg; }
 	
 	public BigDecimal getPeso() {
 		return this.peso;

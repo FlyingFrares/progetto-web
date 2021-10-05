@@ -12,10 +12,10 @@ import java.util.List;
 public interface DettaglioDAO {
 	
 	public Dettaglio create (
-			Long detailID,
+			int detailID,
 			Ordine ordine,
 			Prodotto prodotto,
-			Long quantità,
+			int quantità,
 			BigDecimal subtotale) throws DuplicatedObjectException;
 	
 	public void update(Dettaglio dettaglio) throws DuplicatedObjectException;

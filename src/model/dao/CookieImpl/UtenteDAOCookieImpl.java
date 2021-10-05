@@ -21,7 +21,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 	
 	@Override
 	public Utente create(
-			Long userID,
+			int userID,
 			String username,
 			String admin,
 			String password,
@@ -107,7 +107,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 		
 		String[] values = encodedLoggedUser.split("#");
 		
-		loggedUser.setUserID(Long.parseLong(values[0]));
+		loggedUser.setUserID(Integer.parseInt(values[0]));
 		loggedUser.setNome(values[1]);
 		loggedUser.setCognome(values[2]);
 		

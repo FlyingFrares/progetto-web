@@ -1,25 +1,25 @@
 package model.mo;
 
+import java.sql.*;
 import java.math.*;
-
 
 public class Dettaglio {
 	
 	
-	private Long detailID;
+	private int detailID;
 	private Ordine order; /* N:1 */
 	private Prodotto product; /* 1:1 */
 	
-	private Long quantità;
+	private int quantità;
 	private BigDecimal subtotale;
 	
 	
 	
-	public Long getDetailID() {
+	public int getDetailID() {
 		return this.detailID;
 	}
 	
-	public void setDetailID(Long detailID) {
+	public void setDetailID(int detailID) {
 		this.detailID = detailID;
 	}
 	
@@ -35,15 +35,13 @@ public class Dettaglio {
 		return this.product;
 	}
 	
-	public void setProduct(Prodotto product) {
-		this.product = product;
-	}
+	public void setProduct(Prodotto product) { this.product = product;	}
 	
-	public Long getQuantità() {
+	public int getQuantità() {
 		return this.quantità;
 	}
 	
-	public void setQuantità(Long quantità) {
+	public void setQuantità(int quantità) {
 		this.quantità = quantità;
 	}
 	

@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrdineDAO {
 	
 	public Ordine create (
-			Long orderID,
+			int orderID,
 			Utente user,
 			String indirizzo,
 			Timestamp data,
@@ -24,9 +24,9 @@ public interface OrdineDAO {
 	
 	public void delete(Ordine ordine);
 	
-	public Ordine findByOrderID(Long orderID);
+	public Ordine findByOrderID(int orderID);
 	
-	public List<Ordine> findByUserID(Long userID);
+	public List<Ordine> findByUserID(int userID);
 	
 	public List<Ordine> findAll();
 	

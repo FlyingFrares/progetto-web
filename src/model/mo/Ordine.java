@@ -6,7 +6,7 @@ import java.math.*;
 public class Ordine  {
 	
 	
-	private Long orderID;
+	private int orderID;
 	private Utente user; /* N:1 */
 	private String indirizzo;
 	private Timestamp data;
@@ -20,11 +20,9 @@ public class Ordine  {
 	
 	
 	
-	public Long getOrderID() {
-		return this.orderID;
-	}
+	public int getOrderID() { return this.orderID;	}
 	
-	public void setOrderID(Long orderID) {
+	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
 	

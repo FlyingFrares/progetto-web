@@ -22,7 +22,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 	
 	@Override
 	public Utente create(
-			Long userID,
+			int userID,
 			String username,
 			String admin,
 			String password,
@@ -75,7 +75,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 			resultSet = ps.executeQuery();
 			resultSet.next();
 			
-			utente.setUserID(resultSet.getLong("counterValue"));
+			utente.setUserID(resultSet.getInt("counterValue"));
 			
 			resultSet.close();
 			
@@ -287,7 +287,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 		
 		Utente utente = new Utente();
 		try {
-			utente.setUserID(rs.getLong("userID"));
+			utente.setUserID(rs.getInt("userID"));
 		} catch (SQLException sqle) {
 		}
 		try {

@@ -28,7 +28,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	
 	@Override
 	public Ordine create(
-			Long orderID,
+			int orderID,
 			Utente user,
 			String indirizzo,
 			Timestamp data,
@@ -82,7 +82,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			resultSet = ps.executeQuery();
 			resultSet.next();
 			
-			ordine.setOrderID(resultSet.getLong("counterValue"));
+			ordine.setOrderID(resultSet.getInt("counterValue"));
 			
 			resultSet.close();
 			
@@ -195,7 +195,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	}
 	
 	@Override
-	public Ordine findByOrderID(Long orderID) {
+	public Ordine findByOrderID(int orderID) {
 		
 		PreparedStatement ps;
 		Ordine ordine = null;
@@ -228,7 +228,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	}
 	
 	@Override
-	public List<Ordine> findByUserID(Long userID) {
+	public List<Ordine> findByUserID(int userID) {
 		
 		PreparedStatement ps;
 		Ordine ordine = null;
@@ -293,11 +293,11 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 		
 		Ordine ordine = new Ordine();
 		try {
-			ordine.setOrderID(rs.getLong("orderID"));
+			ordine.setOrderID(rs.getInt("orderID"));
 		} catch (SQLException sqle) {
 		}
 		try {
-			ordine.getUser().setUserID(rs.getLong("userID"));
+			ordine.getUser().setUserID(rs.getInt("userID"));
 		} catch (SQLException sqle) {
 		}
 		try {

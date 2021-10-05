@@ -25,12 +25,12 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	
 	@Override
 	public Prodotto create(
-			Long productID,
+			int productID,
 			String nome,
 			String marchio,
 			String categoria,
 			String descrizione,
-			Long magazzino,
+			int magazzino,
 			BigDecimal prezzoKg,
 			BigDecimal peso,
 			BigDecimal prezzoTot) throws DuplicatedObjectException {
@@ -81,7 +81,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			resultSet = ps.executeQuery();
 			resultSet.next();
 			
-			prodotto.setProductID(resultSet.getLong("counterValue"));
+			prodotto.setProductID(resultSet.getInt("counterValue"));
 			
 			resultSet.close();
 			
@@ -196,7 +196,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	}
 	
 	@Override
-	public Long checkAvailability(Long productID) {
+	public int checkAvailability(int productID) {
 		
 		PreparedStatement ps;
 		Prodotto prodotto = null;
@@ -258,6 +258,43 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	}
 	
 	@Override
+	public List<Prodotto> findByCategory(String category) {
+		
+		PreparedStatement ps;
+		Prodotto prodotto = null;
+		ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
+		
+		try {
+			
+			String sql
+					= " SELECT * "
+					+ " FROM prodotto "
+					+ " WHERE "
+					+ " magazzino > 0 AND "
+					+ " categoria = ? ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, category);
+			
+			ResultSet resultSet = ps.executeQuery();
+			
+			while (resultSet.next()) {
+				prodotto = read(resultSet);
+				prodotti.add(prodotto);
+			}
+			
+			resultSet.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return prodotti;
+	}
+	
+	
+	@Override
 	public List<Prodotto> findByString(String searchString) {
 		
 		PreparedStatement ps;
@@ -299,7 +336,8 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	public List<Prodotto> findAll() {
 		
 		PreparedStatement ps;
-		List<Prodotto> prodotti = new ArrayList<Prodotto>(40);
+		Prodotto prodotto;
+		List<Prodotto> prodotti = new ArrayList<Prodotto>();
 		
 		try {
 			
@@ -311,9 +349,12 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			ResultSet resultSet = ps.executeQuery();
 			
 			while (resultSet.next()) {
-				Prodotto prodotto = read(resultSet);
+				prodotto = read(resultSet);
 				prodotti.add(prodotto);
 			}
+			
+			resultSet.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -327,7 +368,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 		
 		Prodotto prodotto = new Prodotto();
 		try {
-			prodotto.setProductID(rs.getLong("productID"));
+			prodotto.setProductID(rs.getInt("productID"));
 		} catch (SQLException sqle) {
 		}
 		try {
@@ -347,7 +388,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 		} catch (SQLException sqle) {
 		}
 		try {
-			prodotto.setMagazzino(rs.getLong("magazzino"));
+			prodotto.setMagazzino(rs.getInt("magazzino"));
 		} catch (SQLException sqle) {
 		}
 		try {
