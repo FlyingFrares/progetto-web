@@ -33,7 +33,7 @@
   </div>
 
   <form name="logoutForm" action="Dispatcher" method="post">
-    <input type="hidden" name="controllerAction" value="Home.logout"/>
+    <input type="hidden" name="controllerAction" value ="Home.logout"/> <!-- menuActiveLink.logout -->
   </form>
 
   <nav id="menubar"><!-- Defining the navigation menu -->
@@ -41,9 +41,22 @@
       <li <%=menuActiveLink.equals("Home")?"class=\"selected\"":""%>>
         <a href="Dispatcher?controllerAction=Home.view">Home</a>
       </li>
-      <li <%=menuActiveLink.equals("Prodotti")?"class=\"selected\"":""%>>
+      <li <%=menuActiveLink.equals("Category")?"class=\"selected\"":""%>>
         <a href="Dispatcher?controllerAction=Category.view">Prodotti</a>
       </li>
+
+      <%if (loggedOn) {%>
+      <li <%=menuActiveLink.equals("Orders")?"class=\"selected\"":""%>>
+        <a href="Dispatcher?controllerAction=Ordini.view">Ordini</a>
+      </li>
+      <% if (loggedUser.getAdmin().equals("S")) {%>
+      <li <%=menuActiveLink.equals("Admin")?"class=\"selected\"":""%>>
+        <a href="Dispatcher?controllerAction=Home.view">Impostazioni</a>
+      </li>
+      <%}%>
+      <li><a href="javascript:logoutForm.submit()">Logout</a></li>
+      <%}%>
+
       <li <%=menuActiveLink.equals("Carrello")?"class=\"selected\"":""%>>
         <a href="Dispatcher?controllerAction=Cart.view">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" margin="10 20 30 40" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E3138" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -55,20 +68,13 @@
         </a>
       </li>
 
-      <%if (loggedOn) {%>
-      <li <%=menuActiveLink.equals("Ordini")?"class=\"selected\"":""%>>
-        <a href="Dispatcher?controllerAction=Home.view">Ordini</a>
-      </li>
-      <li><a href="javascript:logoutForm.submit()">Logout</a></li>
-      <%}%>
-
       <%if (!loggedOn) {%>
       <!-- < Form per il login > -->
       <section id="login" class="clearfix">
         <form name="logonForm" action="Dispatcher" method="post">
           <input type="text" id="username" placeholder="Username" name="username" maxlength="40" required>
           <input type="password" id="password" placeholder="Password" name="password" maxlength="40" required>
-          <input type="hidden" name="controllerAction" value="Home.logon"/>
+          <input type="hidden" name="controllerAction" value="Home.logon"/> <!-- menuActiveLink.logon -->
           <button type="submit" value="Ok">Login</button>
         </form>
       </section>
