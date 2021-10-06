@@ -1,129 +1,134 @@
 <%@page session="false"%>
 <%@page import="model.mo.Utente"%>
+<%@page import="model.mo.Prodotto" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 
 <%
+  int i = 0;
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
   Utente loggedUser = (Utente) request.getAttribute("loggedUser");
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
-  String menuActiveLink = "Prodotti";
+  String menuActiveLink = "Category";
+  List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
 %>
 
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-  <style>
-    .filterDiv {float: left;
-      background-color: #2196F3;
-      color: #ffffff;
-      width: 100px;
-      line-height: 100px;
-      text-align: center;
-      margin: 2px;
-      display: none;
-    }
-
-    .show {
-      display: block;
-    }
-
-    .container {
-      margin-top: 20px;
-      overflow: hidden;
-    }
-
-    /* Style the buttons */
-    .btn {
-      border: none;
-      outline: none;
-      padding: 12px 16px;
-      background-color: #f1f1f1;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background-color: #ddd;
-    }
-
-    .btn.active {
-      background-color: #666;
-      color: white;
-    }
-  </style>
   <head>
     <%@include file="/include/htmlHead.jsp"%>
+    <style>
+      .product-info {
+        float: left;
+        height: 420px;
+        width: 360px;
+        border-radius: 0 7px 10px 7px;
+        background-color: #ffffff;
+      }
+
+      .product-text {
+        height: 300px;
+        width: 327px;
+      }
+
+      .product-text h1 {
+        margin: 0 0 0 38px;
+        padding-top: 52px;
+        font-size: 34px;
+        color: #474747;
+      }
+
+      .product-text h2 {
+        margin: 0 0 47px 38px;
+        font-size: 16px;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+
+      .product-text p {
+        height: 125px;
+        margin: 0 0 0 38px;
+        color: #8d8d8d;
+        line-height: 1.7em;
+        font-size: 15px;
+        font-weight: lighter;
+        overflow: hidden;
+      }
+
+      .product-price-btn {
+        height: 100px;
+        width: 320px;
+        position: relative;
+      }
+
+      .product-price-btn p {
+        display: inline-block;
+        height: 50px;
+        font-family: 'Trocchi', serif;
+        margin: 0 0 0 38px;
+        font-size: 28px;
+        font-weight: lighter;
+        color: #474747;
+      }
+
+      .product-price-btn button {
+        float: right;
+        display: inline-block;
+        height: 50px;
+        width: 145px;
+        margin: 0 15px 0 15px;
+        box-sizing: border-box;
+        border: transparent;
+        border-radius: 60px;
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: #000000;
+        background-color: #FFC2D6;
+        cursor: pointer;
+        outline: none;
+        padding: 0px 0px;
+      }
+
+      .product-price-btn button:hover {
+        background-color: #CDB4DB;
+      }
+    </style>
   </head>
   <body>
     <%@include file="/include/header.jsp"%>
-    <h2>Filter DIV Elements</h2>
-    <div id="myBtnContainer">
-      <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-      <button class="btn" onclick="filterSelection('cars')"> Cars</button>
-      <button class="btn" onclick="filterSelection('animals')"> Animals</button>
-      <button class="btn" onclick="filterSelection('fruits')"> Fruits</button>
-      <button class="btn" onclick="filterSelection('colors')"> Colors</button>
-    </div>
-
-    <div class="container">
-      <div class="filterDiv cars">BMW</div>
-      <div class="filterDiv colors fruits">Orange</div>
-      <div class="filterDiv cars">Volvo</div>
-      <div class="filterDiv colors">Red</div>
-      <div class="filterDiv cars animals">Mustang</div>
-      <div class="filterDiv colors">Blue</div>
-      <div class="filterDiv animals">Cat</div>
-      <div class="filterDiv animals">Dog</div>
-      <div class="filterDiv fruits">Melon</div>
-      <div class="filterDiv fruits animals">Kiwi</div>
-      <div class="filterDiv fruits">Banana</div>
-      <div class="filterDiv fruits">Lemon</div>
-      <div class="filterDiv animals">Cow</div>
-    </div>
-
-    <script>
-        filterSelection("all")
-        function filterSelection(c) {
-            var x, i;
-            x = document.getElementsByClassName("filterDiv");
-            if (c == "all") c = "";
-            for (i = 0; i < x.length; i++) {
-                w3RemoveClass(x[i], "show");
-                if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-            }
-        }
-
-        function w3AddClass(element, name) {
-            var i, arr1, arr2;
-            arr1 = element.className.split(" ");
-            arr2 = name.split(" ");
-            for (i = 0; i < arr2.length; i++) {
-                if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-            }
-        }
-
-        function w3RemoveClass(element, name) {
-            var i, arr1, arr2;
-            arr1 = element.className.split(" ");
-            arr2 = name.split(" ");
-            for (i = 0; i < arr2.length; i++) {
-                while (arr1.indexOf(arr2[i]) > -1) {
-                    arr1.splice(arr1.indexOf(arr2[i]), 1);
-                }
-            }
-            element.className = arr1.join(" ");
-        }
-
-        // Add active class to the current button (highlight it)
-        var btnContainer = document.getElementById("myBtnContainer");
-        var btns = btnContainer.getElementsByClassName("btn");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function(){
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(" active", "");
-                this.className += " active";
-            });
-        }
-    </script>
-
-    </body>
-    </html>
-
-
+    <main class="clearfix">
+      <div id="site_content">
+        <%@include file="/include/sidebar.jsp"%>
+        <div id="content">
+      <%for (i = 0; i<prodotti.size(); i++) {%>
+        <div class="product-info">
+          <div class="product-text">
+            <h1><%=prodotti.get(i).getNomeProdotto()%></h1>
+            <h2><%=prodotti.get(i).getCategoria()%></h2>
+            <p>
+              Disponibilit&agrave : <%=prodotti.get(i).getMagazzino()%><br>
+              Prezzo/Kg : <%=prodotti.get(i).getPrezzoKg()%> &euro;<br>
+              Peso : <%=prodotti.get(i).getPeso()%> Kg
+            </p>
+          </div>
+          <div class="product-price-btn">
+            <% if (prodotti.get(i).getMagazzino() > 0) {%>
+            <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
+            <button type="button">Acquista</button>
+            <%} else {%>
+            <p>Non disponibile</p>
+            <%}%>
+          </div>
+        </div>
+      <%}%>
+        </div>
+      </div>
+    </main>
+    <%@include file="/include/footer.jsp"%>
+  </body>
+</html>

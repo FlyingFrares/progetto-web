@@ -36,7 +36,6 @@ public class Home {
 			
 			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
 			loggedUser = sessionUserDAO.findLoggedUser();
-			
 			sessionDAOFactory.commitTransaction();
 			
 			request.setAttribute("loggedOn",loggedUser!=null);

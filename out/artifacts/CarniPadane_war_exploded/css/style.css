@@ -18,8 +18,7 @@ body
     font-style: normal;
     font-size: .80em;
     font-family: 'Open Sans', Arial, sans-serif;
-    color: #2E3138;}
-
+    }
 p
 { padding: 0 0 20px 0;
     line-height: 1.7em;}
@@ -206,27 +205,19 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
     width: 250px;
     padding: 0 15px 20px 15px;}
 
-.sidebar ul
-{ width: 178px;
-    padding: 4px 0 0 0;
-    margin: 4px 0 30px 0;}
-
-.sidebar li
-{ list-style: none;
-    padding: 0 0 7px 0; }
-
-.sidebar li a, .sidebar li a:hover
-{ padding: 0 0 0 40px;
-    display: block;
-    background: transparent url(link.png) no-repeat left center;}
-
-.sidebar li a.selected
-{ color: #444;
-    text-decoration: none;}
+.sidebar button
+{ border: none;
+    padding: 14px 28px;
+    height: 50px;
+    width: 150px;
+    margin-right: 100px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;}
 
 #content
 { text-align: left;
-    width: 595px;
+    width: fit-content;
     padding: 0;}
 
 #content ul
@@ -380,7 +371,7 @@ button:hover {
 
 /* Slideshow container */
 .slideshow-container {
-    max-width: 1000px;
+    max-width: fit-content;
     position: relative;
     margin: auto;
 }

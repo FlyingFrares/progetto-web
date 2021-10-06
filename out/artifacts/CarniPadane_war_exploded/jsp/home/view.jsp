@@ -15,41 +15,23 @@
   </head>
   <body>
     <%@include file="/include/header.jsp"%>
-    <main>
+    <main class="clearfix">
       <div id="site_content">
-        <div class="sidebar">
-          <!-- insert your sidebar items here -->
-          <h3>Cerca un prodotto</h3>
-          <form name="searchForm" action="Dispatcher" method="post">
-            <input class="search" type="text" name="search" placeholder="Ricerca" maxlength="40" required>
-            <input type="hidden" name="controllerAction" value="HomeManagement.search"/>
-          </form>
-          <h3>Ultime notizie</h3>
-          <h4>New Website Launched</h4>
-          <h5>August 1st, 2013</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h3>Useful Links</h3>
-          <ul>
-            <li><a href="#">link 1</a></li>
-            <li><a href="#">link 2</a></li>
-            <li><a href="#">link 3</a></li>
-            <li><a href="#">link 4</a></li>
-          </ul>
-        </div>
+       <%@include file="/include/sidebar.jsp"%>
         <div id="content">
           <!-- insert the page content here -->
           <div class="slideshow-container">
 
             <div class="mySlides fade">
-              <img src="images/cesta3.jpg" style="width:100%">
+              <img src="images/insaccati.jpg" style="width:1080px; height:600px">
             </div>
 
             <div class="mySlides fade">
-              <img src="images/cesta4.jpg" style="width:100%">
+              <img src="images/mortadella_bologna.jpg" style="width:1080px; height:600px">
             </div>
 
             <div class="mySlides fade">
-              <img src="images/cesta5.jpg" style="width:100%">
+              <img src="images/salame_dritto.jpeg" style="width:1080px; height:600px">
             </div>
 
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -63,7 +45,6 @@
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
           </div>
-
           <script>
               var slideIndex = 1;
               showSlides(slideIndex);
@@ -93,14 +74,6 @@
               }
           </script>
           </div>
-          <h2>Browser Compatibility</h2>
-          <p>This template has been tested in the following browsers:</p>
-          <ul>
-            <li>Internet Explorer 8</li>
-            <li>Internet Explorer 7</li>
-            <li>FireFox 3.5</li>
-            <li>Google Chrome 6</li>
-          </ul>
         </div>
       </div>
     </main>

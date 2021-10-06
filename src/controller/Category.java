@@ -1,14 +1,14 @@
 package controller;
 
-import model.dao.DAOFactory;
-import model.dao.UtenteDAO;
-import model.mo.Utente;
+import model.dao.*;
+import model.mo.*;
 import services.config.Configuration;
 import services.log.LogService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,9 @@ public class Category {
 	public static void view(HttpServletRequest request, HttpServletResponse response) {
 		
 		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
 		Utente loggedUser;
+		String applicationMessage = null;
 		
 		Logger logger = LogService.getApplicationLogger();
 		
@@ -36,6 +38,12 @@ public class Category {
 			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
 			loggedUser = sessionUserDAO.findLoggedUser();
 			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			commonView(daoFactory, sessionDAOFactory, request);
+			
+			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
 			
 			request.setAttribute("loggedOn", loggedUser != null);
@@ -59,111 +67,16 @@ public class Category {
 		}
 		
 	}
-	
-	public static void logon(HttpServletRequest request, HttpServletResponse response) {
 		
-		DAOFactory sessionDAOFactory = null;
-		DAOFactory daoFactory = null;
-		Utente loggedUser;
-		String applicationMessage = null;
-		
-		Logger logger = LogService.getApplicationLogger();
-		
-		try {
+	private static void commonView(DAOFactory daoFactory, DAOFactory sessionDAOFactory, HttpServletRequest request) {
 			
-			Map sessionFactoryParameters = new HashMap<String, Object>();
-			sessionFactoryParameters.put("request", request);
-			sessionFactoryParameters.put("response", response);
-			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
-			sessionDAOFactory.beginTransaction();
+			List<Prodotto> prodotti;
 			
-			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
-			loggedUser = sessionUserDAO.findLoggedUser();
+			ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
 			
-			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
-			daoFactory.beginTransaction();
+			prodotti = prodottoDAO.findAll();
 			
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
+			request.setAttribute("prodotti", prodotti);
 			
-			UtenteDAO userDAO = daoFactory.getUtenteDAO();
-			Utente user = userDAO.findByUsername(username);
-			
-			if (user == null || !user.getPassword().equals(password)) {
-				sessionUserDAO.delete(null);
-				applicationMessage = "Username e password errati!";
-				loggedUser = null;
-			} else {
-				loggedUser = sessionUserDAO.create(user.getUserID(), null, user.getAdmin(), null, user.getNome(), user.getCognome(), null);
-			}
-			
-			daoFactory.commitTransaction();
-			sessionDAOFactory.commitTransaction();
-			
-			request.setAttribute("loggedOn", loggedUser != null);
-			request.setAttribute("loggedUser", loggedUser);
-			if (loggedUser != null) {
-				request.setAttribute("isAdmin", loggedUser.getAdmin());
-			}
-			request.setAttribute("applicationMessage", applicationMessage);
-			request.setAttribute("viewUrl", "home/view");
-			
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Controller Error", e);
-			try {
-				if (daoFactory != null) daoFactory.rollbackTransaction();
-				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
-			} catch (Throwable t) {
-			}
-			throw new RuntimeException(e);
-			
-		} finally {
-			try {
-				if (daoFactory != null) daoFactory.closeTransaction();
-				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
-			} catch (Throwable t) {
-			}
-		}
-		
-	}
-	
-	public static void logout(HttpServletRequest request, HttpServletResponse response) {
-		
-		DAOFactory sessionDAOFactory = null;
-		
-		Logger logger = LogService.getApplicationLogger();
-		
-		try {
-			
-			Map sessionFactoryParameters = new HashMap<String, Object>();
-			sessionFactoryParameters.put("request", request);
-			sessionFactoryParameters.put("response", response);
-			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
-			sessionDAOFactory.beginTransaction();
-			
-			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
-			sessionUserDAO.delete(null);
-			
-			sessionDAOFactory.commitTransaction();
-			
-			request.setAttribute("loggedOn", false);
-			request.setAttribute("loggedUser", null);
-			request.setAttribute("isAdmin", null);
-			request.setAttribute("viewUrl", "home/view");
-			
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Controller Error", e);
-			try {
-				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
-			} catch (Throwable t) {
-			}
-			throw new RuntimeException(e);
-			
-		} finally {
-			try {
-				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
-			} catch (Throwable t) {
-			}
-		}
 	}
 }

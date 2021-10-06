@@ -31,9 +31,9 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 		
 		Utente loggedUser = new Utente();
 		loggedUser.setUserID(userID);
+		loggedUser.setAdmin(admin);
 		loggedUser.setNome(nome);
 		loggedUser.setCognome(cognome);
-		loggedUser.setAdmin(admin);
 		
 		Cookie cookie;
 		cookie = new Cookie("loggedUser", encode(loggedUser));
@@ -84,8 +84,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 	}
 	
 	@Override
-	public Utente findByUsername(String username) {	throw new UnsupportedOperationException("Not supported yet.");
-	}
+	public Utente findByUsername(String username) {	throw new UnsupportedOperationException("Not supported yet."); }
 	
 	@Override
 	public Utente findByEmail(String email) { throw new UnsupportedOperationException("Not supported yet."); }
@@ -96,7 +95,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 	private String encode(Utente loggedUser) {
 		
 		String encodedLoggedUser;
-		encodedLoggedUser = loggedUser.getUserID() + "#" + loggedUser.getNome() + "#" + loggedUser.getCognome();
+		encodedLoggedUser = loggedUser.getUserID() + "#" + loggedUser.getAdmin() + "#" + loggedUser.getNome() + "#" + loggedUser.getCognome();
 		return encodedLoggedUser;
 		
 	}
@@ -108,8 +107,9 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 		String[] values = encodedLoggedUser.split("#");
 		
 		loggedUser.setUserID(Integer.parseInt(values[0]));
-		loggedUser.setNome(values[1]);
-		loggedUser.setCognome(values[2]);
+		loggedUser.setAdmin(values[1]);
+		loggedUser.setNome(values[2]);
+		loggedUser.setCognome(values[3]);
 		
 		return loggedUser;
 		
