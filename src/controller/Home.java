@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
 import services.config.Configuration;
 import services.log.LogService;
 
@@ -21,24 +20,24 @@ public class Home {
 	
 	public static void view(HttpServletRequest request, HttpServletResponse response) {
 		
-		DAOFactory sessionDAOFactory= null;
+		DAOFactory sessionDAOFactory = null;
 		Utente loggedUser;
 		
 		Logger logger = LogService.getApplicationLogger();
 		
 		try {
 			
-			Map sessionFactoryParameters=new HashMap<String,Object>();
-			sessionFactoryParameters.put("request",request);
-			sessionFactoryParameters.put("response",response);
-			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
 			sessionDAOFactory.beginTransaction();
 			
 			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
 			loggedUser = sessionUserDAO.findLoggedUser();
 			sessionDAOFactory.commitTransaction();
 			
-			request.setAttribute("loggedOn",loggedUser!=null);
+			request.setAttribute("loggedOn", loggedUser != null);
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "home/view");
 			
@@ -62,7 +61,7 @@ public class Home {
 	
 	public static void logon(HttpServletRequest request, HttpServletResponse response) {
 		
-		DAOFactory sessionDAOFactory= null;
+		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;
 		Utente loggedUser;
 		String applicationMessage = null;
@@ -71,16 +70,16 @@ public class Home {
 		
 		try {
 			
-			Map sessionFactoryParameters=new HashMap<String,Object>();
-			sessionFactoryParameters.put("request",request);
-			sessionFactoryParameters.put("response",response);
-			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
 			sessionDAOFactory.beginTransaction();
 			
 			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
 			loggedUser = sessionUserDAO.findLoggedUser();
 			
-			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
 			daoFactory.beginTransaction();
 			
 			String username = request.getParameter("username");
@@ -92,15 +91,15 @@ public class Home {
 			if (user == null || !user.getPassword().equals(password)) {
 				sessionUserDAO.delete(null);
 				applicationMessage = "Username e password errati!";
-				loggedUser=null;
+				loggedUser = null;
 			} else {
-				loggedUser = sessionUserDAO.create(user.getUserID(), null,user.getAdmin(), null, user.getNome(), user.getCognome(),null);
+				loggedUser = sessionUserDAO.create(user.getUserID(), null, user.getAdmin(), null, user.getNome(), user.getCognome(), null);
 			}
 			
 			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
 			
-			request.setAttribute("loggedOn",loggedUser!=null);
+			request.setAttribute("loggedOn", loggedUser != null);
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("applicationMessage", applicationMessage);
 			request.setAttribute("viewUrl", "home/view");
@@ -126,16 +125,16 @@ public class Home {
 	
 	public static void logout(HttpServletRequest request, HttpServletResponse response) {
 		
-		DAOFactory sessionDAOFactory= null;
+		DAOFactory sessionDAOFactory = null;
 		
 		Logger logger = LogService.getApplicationLogger();
 		
 		try {
 			
-			Map sessionFactoryParameters=new HashMap<String,Object>();
-			sessionFactoryParameters.put("request",request);
-			sessionFactoryParameters.put("response",response);
-			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
 			sessionDAOFactory.beginTransaction();
 			
 			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
@@ -143,7 +142,7 @@ public class Home {
 			
 			sessionDAOFactory.commitTransaction();
 			
-			request.setAttribute("loggedOn",false);
+			request.setAttribute("loggedOn", false);
 			request.setAttribute("loggedUser", null);
 			request.setAttribute("viewUrl", "home/view");
 			
@@ -162,8 +161,4 @@ public class Home {
 			}
 		}
 	}
-	
-	public static void search(HttpServletRequest request, HttpServletResponse response)
-	{}
-	
 }

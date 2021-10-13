@@ -12,6 +12,15 @@
 <html>
   <head>
     <%@include file="/include/htmlHead.jsp"%>
+    <style>
+      .product-info {
+        float: left;
+        height: 420px;
+        width: 327px;
+        border-radius: 0 7px 10px 7px;
+        background-color: #ffffff;
+      }
+    </style>
   </head>
   <body>
     <%@include file="/include/header.jsp"%>
@@ -21,21 +30,62 @@
         <div id="content">
           <!-- insert the page content here -->
           <div class="slideshow-container">
-
             <div class="mySlides fade">
-              <img src="images/insaccati.jpg" style="width:1080px; height:600px">
+              <div class="wrapper">
+                <div class="product-img">
+                  <img src="images/gran_fico.jpeg" height="420" width="327">
+                </div>
+                <div class="product-info">
+                  <div class="product-text">
+                    <h1>Gran fico</h1>
+                    <h2>Specialit&agrave</h2>
+                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                  </div>
+                  <div class="product-price-btn">
+                    <p><span>78</span>$</p>
+                    <button type="button">buy now</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="mySlides fade">
-              <img src="images/mortadella_bologna.jpg" style="width:1080px; height:600px">
+              <div class="wrapper">
+                <div class="product-img">
+                  <img src="images/gentile.jpg" height="420" width="327">
+                </div>
+                <div class="product-info">
+                  <div class="product-text">
+                    <h1>Harvest Vase</h1>
+                    <h2>by studio and friends</h2>
+                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                  </div>
+                  <div class="product-price-btn">
+                    <p><span>78</span>$</p>
+                    <button type="button">buy now</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="mySlides fade">
-              <img src="images/salame_dritto.jpeg" style="width:1080px; height:600px">
+              <div class="wrapper">
+                <div class="product-img">
+                  <img src="images/dolce_goccia.jpg" height="420" width="327">
+                </div>
+                <div class="product-info">
+                  <div class="product-text">
+                    <h1>Harvest Vase</h1>
+                    <h2>by studio and friends</h2>
+                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                  </div>
+                  <div class="product-price-btn">
+                    <p><span>78</span>$</p>
+                    <button type="button">buy now</button>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
           </div>
           <br>

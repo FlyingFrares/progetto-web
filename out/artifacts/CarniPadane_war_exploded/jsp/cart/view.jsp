@@ -1,129 +1,218 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<script>
+    // ************************************************
+    // Shopping Cart API
+    // ************************************************
 
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <title>The Affable Bean</title>
-</head>
-<body>
-<div id="main">
-  <div id="header">
-    <div id="widgetBar">
+    var shoppingCart = (function() {
+        // =============================
+        // Private methods and propeties
+        // =============================
+        cart = [];
 
-      <div class="headerWidget">
-        [ language toggle ]
-      </div>
+        // Constructor
+        function Item(name, price, count) {
+            this.name = name;
+            this.price = price;
+            this.count = count;
+        }
 
-      <div class="headerWidget"></div>
+        // Save cart
+        function saveCart() {
+            sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
 
-      <div class="headerWidget">
-        [ shopping cart widget ]
-      </div>
+        // Load cart
+        function loadCart() {
+            cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+        }
+        if (sessionStorage.getItem("shoppingCart") != null) {
+            loadCart();
+        }
 
-    </div>
 
-    <a href="#">
-      <img src="#" id="logo" alt="Affable Bean logo">
-    </a>
+        // =============================
+        // Public methods and propeties
+        // =============================
+        var obj = {};
 
-    <img src="#" id="logoText" alt="the affable bean">
+        // Add to cart
+        obj.addItemToCart = function(name, price, count) {
+            for(var item in cart) {
+                if(cart[item].name === name) {
+                    cart[item].count ++;
+                    saveCart();
+                    return;
+                }
+            }
+            var item = new Item(name, price, count);
+            cart.push(item);
+            saveCart();
+        }
+        // Set count from item
+        obj.setCountForItem = function(name, count) {
+            for(var i in cart) {
+                if (cart[i].name === name) {
+                    cart[i].count = count;
+                    break;
+                }
+            }
+        };
+        // Remove item from cart
+        obj.removeItemFromCart = function(name) {
+            for(var item in cart) {
+                if(cart[item].name === name) {
+                    cart[item].count --;
+                    if(cart[item].count === 0) {
+                        cart.splice(item, 1);
+                    }
+                    break;
+                }
+            }
+            saveCart();
+        }
+
+        // Remove all items from cart
+        obj.removeItemFromCartAll = function(name) {
+            for(var item in cart) {
+                if(cart[item].name === name) {
+                    cart.splice(item, 1);
+                    break;
+                }
+            }
+            saveCart();
+        }
+
+        // Clear cart
+        obj.clearCart = function() {
+            cart = [];
+            saveCart();
+        }
+
+        // Count cart
+        obj.totalCount = function() {
+            var totalCount = 0;
+            for(var item in cart) {
+                totalCount += cart[item].count;
+            }
+            return totalCount;
+        }
+
+        // Total cart
+        obj.totalCart = function() {
+            var totalCart = 0;
+            for(var item in cart) {
+                totalCart += cart[item].price * cart[item].count;
+            }
+            return Number(totalCart.toFixed(2));
+        }
+
+        // List cart
+        obj.listCart = function() {
+            var cartCopy = [];
+            for(i in cart) {
+                item = cart[i];
+                itemCopy = {};
+                for(p in item) {
+                    itemCopy[p] = item[p];
+
+                }
+                itemCopy.total = Number(item.price * item.count).toFixed(2);
+                cartCopy.push(itemCopy)
+            }
+            return cartCopy;
+        }
+
+        // cart : Array
+        // Item : Object/Class
+        // addItemToCart : Function
+        // removeItemFromCart : Function
+        // removeItemFromCartAll : Function
+        // clearCart : Function
+        // countCart : Function
+        // totalCart : Function
+        // listCart : Function
+        // saveCart : Function
+        // loadCart : Function
+        return obj;
+    })();
+
+
+    // *****************************************
+    // Triggers / Events
+    // *****************************************
+    // Add item
+    $('.add-to-cart').click(function(event) {
+        event.preventDefault();
+        var name = $(this).data('name');
+        var price = Number($(this).data('price'));
+        shoppingCart.addItemToCart(name, price, 1);
+        displayCart();
+    });
+
+    // Clear items
+    $('.clear-cart').click(function() {
+        shoppingCart.clearCart();
+        displayCart();
+    });
+
+
+    function displayCart() {
+        var cartArray = shoppingCart.listCart();
+        var output = "";
+        for(var i in cartArray) {
+            output += "<tr>"
+                + "<td>" + cartArray[i].name + "</td>"
+                + "<td>(" + cartArray[i].price + ")</td>"
+                + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" + cartArray[i].name + ">-</button>"
+                + "<input type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                + "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
+                + "<td><button class='delete-item btn btn-danger' data-name=" + cartArray[i].name + ">X</button></td>"
+                + " = "
+                + "<td>" + cartArray[i].total + "</td>"
+                +  "</tr>";
+        }
+        $('.show-cart').html(output);
+        $('.total-cart').html(shoppingCart.totalCart());
+        $('.total-count').html(shoppingCart.totalCount());
+    }
+
+    // Delete item button
+
+    $('.show-cart').on("click", ".delete-item", function(event) {
+        var name = $(this).data('name')
+        shoppingCart.removeItemFromCartAll(name);
+        displayCart();
+    })
+
+
+    // -1
+    $('.show-cart').on("click", ".minus-item", function(event) {
+        var name = $(this).data('name')
+        shoppingCart.removeItemFromCart(name);
+        displayCart();
+    })
+    // +1
+    $('.show-cart').on("click", ".plus-item", function(event) {
+        var name = $(this).data('name')
+        shoppingCart.addItemToCart(name);
+        displayCart();
+    })
+
+    // Item count input
+    $('.show-cart').on("change", ".item-count", function(event) {
+        var name = $(this).data('name');
+        var count = Number($(this).val());
+        shoppingCart.setCountForItem(name, count);
+        displayCart();
+    });
+
+    displayCart();
+
+</script>
+<!-- Nav -->
+<nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button></div>
   </div>
-
-  <div id="centerColumn">
-
-    <p>Your shopping cart contains x items.</p>
-
-    <div id="actionBar">
-      <a href="#" class="bubble hMargin">clear cart</a>
-      <a href="#" class="bubble hMargin">continue shopping</a>
-      <a href="#" class="bubble hMargin">proceed to checkout</a>
-    </div>
-
-    <h4 id="subtotal">[ subtotal: xxx ]</h4>
-
-    <table id="cartTable">
-
-      <tr class="header">
-        <th>product</th>
-        <th>name</th>
-        <th>price</th>
-        <th>quantity</th>
-      </tr>
-
-      <tr>
-        <td class="lightBlue">
-          <img src="#" alt="product image">
-        </td>
-        <td class="lightBlue">[ product name ]</td>
-        <td class="lightBlue">[ price ]</td>
-        <td class="lightBlue">
-
-          <form action="updateCart" method="post">
-            <input type="text"
-                   maxlength="2"
-                   size="2"
-                   value="1"
-                   name="quantity">
-            <input type="submit"
-                   name="submit"
-                   value="update button">
-          </form>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="white">
-          <img src="#" alt="product image">
-        </td>
-        <td class="white">[ product name ]</td>
-        <td class="white">[ price ]</td>
-        <td class="white">
-
-          <form action="updateCart" method="post">
-            <input type="text"
-                   maxlength="2"
-                   size="2"
-                   value="1"
-                   name="quantity">
-            <input type="submit"
-                   name="submit"
-                   value="update button">
-          </form>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="lightBlue">
-          <img src="#" alt="product image">
-        </td>
-        <td class="lightBlue">[ product name ]</td>
-        <td class="lightBlue">[ price ]</td>
-        <td class="lightBlue">
-
-          <form action="updateCart" method="post">
-            <input type="text"
-                   maxlength="2"
-                   size="2"
-                   value="1"
-                   name="quantity">
-            <input type="submit"
-                   name="submit"
-                   value="update button">
-          </form>
-        </td>
-      </tr>
-
-    </table>
-
-  </div>
-
-  <div id="footer">
-    <hr>
-    <p id="footerText">[ footer text ]</p>
-  </div>
-</div>
-</body>
-</html>
+</nav>

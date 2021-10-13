@@ -270,7 +270,6 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					= " SELECT * "
 					+ " FROM prodotto "
 					+ " WHERE "
-					+ " magazzino > 0 AND "
 					+ " categoria = ? ";
 			
 			ps = conn.prepareStatement(sql);
@@ -307,7 +306,6 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					= " SELECT * "
 					+ " FROM prodotto "
 					+ " WHERE "
-					+ " magazzino > 0 AND "
 					+ " ( nome LIKE ? OR marchio LIKE ? OR categoria LIKE ? ) "
 					+ " ORDER BY categoria, nome ";
 					
