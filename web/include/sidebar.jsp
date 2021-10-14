@@ -1,3 +1,12 @@
+<script>
+
+  function selectCategory(category) {
+      let cat = document.getElementById('bf');
+      cat.setAttribute('value',category);
+      document.buttonForm.submit();
+  }
+
+</script>
 <div class="sidebar">
   <!-- insert your sidebar items here -->
   <h3>Cerca un prodotto</h3>
@@ -6,28 +15,15 @@
     <input type="hidden" name="controllerAction" value="Category.search"/>
   </form>
   <h3>Categorie</h3>
+  <button type="button" name="crudi" onclick='selectCategory("crudi")'>Crudi</button>
+  <button type="button" name="cotti" onclick='selectCategory("cotti")'>Cotti</button>
+  <button type="button" name="mortadelle" onclick='selectCategory("mortadelle")'>Mortadelle</button>
+  <button type="button" name="pancette" onclick='selectCategory("pancette")'>Pancette</button>
+  <button type="button" name="salami" onclick='selectCategory("salami")'>Salami</button>
+  <button type="button" name="special" onclick='selectCategory("special")'>Specialit&agrave</button>
+
   <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="crudi" value="Crudi">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
-  </form>
-  <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="cotti" value="Cotti">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
-  </form>
-  <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="salami" value="Salami">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
-  </form>
-  <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="pancette" value="Pancette">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
-  </form>
-  <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="special" value="Specialit&agrave">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
-  </form>
-  <form name="buttonForm" action="Dispatcher" method="post">
-    <input type="submit" id="mortadelle" value="Mortadelle">
-    <input type="hidden" name="controllerAction" value="Home.view"/>
+    <input type="hidden" id="bf" name="search"/>
+    <input type="hidden" name="controllerAction" value="Category.search"/>
   </form>
 </div>
