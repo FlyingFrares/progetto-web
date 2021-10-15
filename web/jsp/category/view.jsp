@@ -13,16 +13,6 @@
   List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
 %>
 
-<script>
-    function checkloggeduser() {
-            alert("Effettua il login");
-    }
-
-    function mainOnLoadHandler() {
-        document.querySelector("#buy").addEventListener("click", checkloggeduser);
-    }
-</script>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -48,11 +38,11 @@
           <div class="product-price-btn">
             <% if (prodotti.get(i).getMagazzino() > 0) {%>
             <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
-            <% if (!loggedOn) {%>
-            <button type="button" id="buy">Acquista</button>
+            <% if(!loggedOn) {%>
+            <button type="button">Effettua il login</button>
             <%} else {%>
             <button type="button">Acquista</button>
-            <%}}else {%>
+            <%}} else {%>
             <p>Non disponibile</p>
             <%}%>
           </div>
