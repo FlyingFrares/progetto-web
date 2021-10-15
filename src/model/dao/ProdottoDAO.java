@@ -25,7 +25,7 @@ public interface ProdottoDAO {
 	
 	public int checkAvailability(int productID);
 	
-	public Prodotto findByProductId(Long productID);
+	public Prodotto findByProductId(int productID);
 	
 	public List<Prodotto> findByCategory(String category);
 	

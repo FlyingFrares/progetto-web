@@ -49,8 +49,8 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, dettaglio.getOrder().getOrderID());
-			ps.setLong(2, dettaglio.getProduct().getProductID());
+			ps.setInt(1, dettaglio.getOrder().getOrderID());
+			ps.setInt(2, dettaglio.getProduct().getProductID());
 			
 			
 			ResultSet resultSet = ps.executeQuery();
@@ -85,10 +85,10 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, dettaglio.getDetailID());
-			ps.setLong(i++, dettaglio.getOrder().getOrderID());
-			ps.setLong(i++, dettaglio.getProduct().getProductID());
-			ps.setLong(i++, dettaglio.getQuantità());
+			ps.setInt(i++, dettaglio.getDetailID());
+			ps.setInt(i++, dettaglio.getOrder().getOrderID());
+			ps.setInt(i++, dettaglio.getProduct().getProductID());
+			ps.setInt(i++, dettaglio.getQuantità());
 			ps.setBigDecimal(i++, dettaglio.getSubtotale());
 			ps.executeUpdate();
 			
@@ -116,10 +116,10 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, dettaglio.getProduct().getProductID());
-			ps.setLong(i++, dettaglio.getOrder().getOrderID());
-			ps.setLong(i++, dettaglio.getQuantità());
-			ps.setLong(i++, dettaglio.getDetailID());
+			ps.setInt(i++, dettaglio.getProduct().getProductID());
+			ps.setInt(i++, dettaglio.getOrder().getOrderID());
+			ps.setInt(i++, dettaglio.getQuantità());
+			ps.setInt(i++, dettaglio.getDetailID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -142,9 +142,9 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			
 			ps = conn.prepareStatement(sql);
 			i = 1;
-			ps.setLong(i++, dettaglio.getOrder().getOrderID());
-			ps.setLong(i++, dettaglio.getProduct().getProductID());
-			ps.setLong(i++, dettaglio.getQuantità());
+			ps.setInt(i++, dettaglio.getOrder().getOrderID());
+			ps.setInt(i++, dettaglio.getProduct().getProductID());
+			ps.setInt(i++, dettaglio.getQuantità());
 			ps.setBigDecimal(i++, dettaglio.getSubtotale());
 			ps.executeUpdate();
 			
@@ -168,7 +168,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " detailID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, dettaglio.getDetailID());
+			ps.setInt(1, dettaglio.getDetailID());
 			ps.executeUpdate();
 			ps.close();
 			
@@ -179,7 +179,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	}
 	
 	@Override
-	public Dettaglio findByDetailID(Long detailID) {
+	public Dettaglio findByDetailID(int detailID) {
 		
 		PreparedStatement ps;
 		Dettaglio dettaglio = null;
@@ -193,7 +193,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " detailID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, detailID);
+			ps.setInt(1, detailID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -211,7 +211,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	}
 	
 	@Override
-	public List<Dettaglio> findByOrderID(Long orderID) {
+	public List<Dettaglio> findByOrderID(int orderID) {
 		
 		PreparedStatement ps;
 		Dettaglio dettaglio = null;
@@ -226,7 +226,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " orderID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, orderID);
+			ps.setInt(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -243,7 +243,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	}
 	
 	@Override
-	public List<Dettaglio> findByProductID(Long orderID) {
+	public List<Dettaglio> findByProductID(int orderID) {
 		
 		PreparedStatement ps;
 		Dettaglio dettaglio = null;
@@ -258,7 +258,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, orderID);
+			ps.setInt(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			

@@ -85,7 +85,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, utente.getUserID());
+			ps.setInt(i++, utente.getUserID());
 			ps.setString(i++, utente.getUsername());
 			ps.setString(i++, utente.getAdmin());
 			ps.setString(i++, utente.getPassword());
@@ -120,7 +120,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, utente.getUsername());
 			ps.setString(2, utente.getEmail());
-			ps.setLong(3, utente.getUserID());
+			ps.setInt(3, utente.getUserID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -173,7 +173,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 					+ " userID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, utente.getUserID());
+			ps.setInt(1, utente.getUserID());
 			ps.executeUpdate();
 			ps.close();
 			

@@ -57,7 +57,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, prodotto.getNomeProdotto());
-			ps.setLong(2, prodotto.getProductID());
+			ps.setInt(2, prodotto.getProductID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -91,12 +91,12 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, prodotto.getProductID());
+			ps.setInt(i++, prodotto.getProductID());
 			ps.setString(i++, prodotto.getNomeProdotto());
 			ps.setString(i++, prodotto.getMarchio());
 			ps.setString(i++, prodotto.getCategoria());
 			ps.setString(i++, prodotto.getDescrizione());
-			ps.setLong(i++, prodotto.getMagazzino());
+			ps.setInt(i++, prodotto.getMagazzino());
 			ps.setBigDecimal(i++, prodotto.getPrezzoKg());
 			ps.setBigDecimal(i++, prodotto.getPeso());
 			/* ps.setBigDecimal(i++, prodotto.getPrezzoTot()); */
@@ -128,7 +128,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			ps.setString(1, prodotto.getNomeProdotto());
 			ps.setString(2, prodotto.getMarchio());
 			ps.setString(3, prodotto.getCategoria());
-			ps.setLong(4, prodotto.getProductID());
+			ps.setInt(4, prodotto.getProductID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -159,10 +159,10 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			ps.setString(i++, prodotto.getMarchio());
 			ps.setString(i++, prodotto.getCategoria());
 			ps.setString(i++, prodotto.getDescrizione());
-			ps.setLong(i++, prodotto.getMagazzino());
+			ps.setInt(i++, prodotto.getMagazzino());
 			ps.setBigDecimal(i++, prodotto.getPrezzoKg());
 			ps.setBigDecimal(i++, prodotto.getPeso());
-			ps.setLong(i++, prodotto.getProductID());
+			ps.setInt(i++, prodotto.getProductID());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -185,7 +185,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, prodotto.getProductID());
+			ps.setInt(1, prodotto.getProductID());
 			ps.executeUpdate();
 			ps.close();
 			
@@ -208,7 +208,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " WHERE productID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, productID);
+			ps.setInt(1, productID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -226,7 +226,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	}
 	
 	@Override
-	public Prodotto findByProductId(Long productID) {
+	public Prodotto findByProductId(int productID) {
 		
 		PreparedStatement ps;
 		Prodotto prodotto = null;
@@ -240,7 +240,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " productID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, productID);
+			ps.setInt(1, productID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			

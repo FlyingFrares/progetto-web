@@ -22,11 +22,11 @@ public interface DettaglioDAO {
 	
 	public void delete(Dettaglio dettaglio);
 	
-	public Dettaglio findByDetailID(Long detailID);
+	public Dettaglio findByDetailID(int detailID);
 	
-	public List<Dettaglio> findByOrderID(Long orderID);
+	public List<Dettaglio> findByOrderID(int orderID);
 	
-	public List<Dettaglio> findByProductID(Long productID);
+	public List<Dettaglio> findByProductID(int productID);
 	
 	/*
 	setSubtotale

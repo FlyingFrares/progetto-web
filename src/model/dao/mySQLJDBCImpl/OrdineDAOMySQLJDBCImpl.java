@@ -57,8 +57,8 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " userID = ? ";
 					
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, ordine.getOrderID());
-			ps.setLong(2, ordine.getUser().getUserID());
+			ps.setInt(1, ordine.getOrderID());
+			ps.setInt(2, ordine.getUser().getUserID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -92,8 +92,8 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, ordine.getOrderID());
-			ps.setLong(i++, ordine.getUser().getUserID());
+			ps.setInt(i++, ordine.getOrderID());
+			ps.setInt(i++, ordine.getUser().getUserID());
 			ps.setString(i++, ordine.getIndirizzo());
 			ps.setTimestamp(i++, ordine.getData());
 			ps.setString(i++, ordine.getStato());
@@ -128,11 +128,11 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
-			ps.setLong(i++, ordine.getUser().getUserID());
+			ps.setInt(i++, ordine.getUser().getUserID());
 			ps.setString(i++, ordine.getIndirizzo());
 			ps.setTimestamp(i++, ordine.getData());
 			ps.setString(i++, ordine.getIDpagamento());
-			ps.setLong(i++, ordine.getOrderID());
+			ps.setInt(i++, ordine.getOrderID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -162,7 +162,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			ps.setString(i++, ordine.getStato());
 			ps.setBigDecimal(i++, ordine.getTotale());
 			ps.setString(i++, ordine.getIDpagamento());
-			ps.setLong(i++, ordine.getOrderID());
+			ps.setInt(i++, ordine.getOrderID());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -184,7 +184,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " orderID = ? ";
 					
 				ps = conn.prepareStatement(sql);
-				ps.setLong(1, ordine.getOrderID());
+				ps.setInt(1, ordine.getOrderID());
 				ps.executeUpdate();
 				ps.close();
 				
@@ -210,7 +210,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " deleted = 'N' ";
 				
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, orderID);
+			ps.setInt(1, orderID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -244,7 +244,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " deleted = 'N' ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setLong(1, userID);
+			ps.setInt(1, userID);
 			
 			ResultSet resultSet = ps.executeQuery();
 			
