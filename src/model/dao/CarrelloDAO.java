@@ -10,7 +10,6 @@ import java.util.List;
 public interface CarrelloDAO {
 	
 	public Carrello create (
-			int cartID,
 			Utente utente,
 			Prodotto prodotto,
 			int quantità) throws DuplicatedObjectException;

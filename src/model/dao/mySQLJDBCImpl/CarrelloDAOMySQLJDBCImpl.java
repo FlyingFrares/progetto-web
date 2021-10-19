@@ -23,14 +23,12 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 	
 	@Override
 	public Carrello create(
-			int cartID,
 			Utente utente,
 			Prodotto prodotto,
 			int quantità) throws DuplicatedObjectException {
 		
 		PreparedStatement ps;
 		Carrello carrello = new Carrello();
-		carrello.setCartID(cartID);
 		carrello.setUser(utente);
 		carrello.setProduct(prodotto);
 		carrello.setQuantita(quantità);
@@ -41,12 +39,13 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 					= " SELECT cartID "
 					+ " FROM carrello "
 					+ " WHERE "
+					+ " deleted = 'N' AND "
 					+ " userID = ? AND "
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, carrello.getUser().getUserID());
-			ps.setInt(2, carrello.getProduct().getProductID());
+			ps.setInt(1, utente.getUserID());
+			ps.setInt(2, prodotto.getProductID());
 			
 			
 			ResultSet resultSet = ps.executeQuery();

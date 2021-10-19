@@ -13,6 +13,14 @@
   List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
 %>
 
+<script>
+  function addToCart(productID) {
+      let id = document.getElementById('atc');
+      id.setAttribute('value',productID);
+      document.addToCartForm.submit();
+  }
+</script>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -39,9 +47,9 @@
             <% if (prodotti.get(i).getMagazzino() > 0) {%>
             <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
             <% if(!loggedOn) {%>
-            <button type="button">Effettua il login</button>
+            <button type="button" >Effettua il login</button>
             <%} else {%>
-            <button type="button">Acquista</button>
+            <button type="button" onclick='addToCart(<%=prodotti.get(i).getProductID()%>)'>Acquista</button>
             <%}} else {%>
             <p>Non disponibile</p>
             <%}%>
@@ -50,6 +58,12 @@
       <%}%>
         </div>
       </div>
+
+      <form name="addToCartForm" action="Dispatcher" method="post">
+        <input type="hidden" id="atc" name="productID"/>
+        <input type="hidden" name="controllerAction" value="Category.addToCart"/>
+      </form>
+
     </main>
     <%@include file="/include/footer.jsp"%>
   </body>
