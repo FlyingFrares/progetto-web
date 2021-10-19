@@ -1,7 +1,10 @@
 package controller;
 
+import model.dao.CarrelloDAO;
 import model.dao.DAOFactory;
+import model.dao.ProdottoDAO;
 import model.dao.UtenteDAO;
+import model.mo.Carrello;
 import model.mo.Utente;
 import services.config.Configuration;
 import services.log.LogService;
@@ -9,6 +12,7 @@ import services.log.LogService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +45,8 @@ public class Cart {
 			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
 			daoFactory.beginTransaction();
 			
+			commonView(daoFactory, sessionDAOFactory, request, loggedUser);
+			
 			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
 			
@@ -64,5 +70,13 @@ public class Cart {
 			}
 		}
 		
+	}
+	
+	private static void commonView(DAOFactory daoFactory, DAOFactory sessionDAOFactory, HttpServletRequest request, Utente loggedUser) {
+		
+		List<Carrello> carrelli;
+		CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+		carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
+		request.setAttribute("carrelli", carrelli);
 	}
 }

@@ -1,12 +1,10 @@
 package model.dao.mySQLJDBCImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import model.dao.CarrelloDAO;
-import model.dao.DettaglioDAO;
+import model.dao.DAOFactory;
+import model.dao.ProdottoDAO;
 import model.dao.exception.DuplicatedObjectException;
 import model.mo.Carrello;
 import model.mo.Prodotto;
@@ -35,7 +33,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 		carrello.setCartID(cartID);
 		carrello.setUser(utente);
 		carrello.setProduct(prodotto);
-		carrello.setQuantità(quantità);
+		carrello.setQuantita(quantità);
 		
 		try {
 			
@@ -86,7 +84,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 			ps.setInt(i++, carrello.getCartID());
 			ps.setInt(i++, carrello.getUser().getUserID());
 			ps.setInt(i++, carrello.getProduct().getProductID());
-			ps.setInt(i++, carrello.getQuantità());
+			ps.setInt(i++, carrello.getQuantita());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -115,7 +113,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 			int i = 1;
 			ps.setInt(i++, carrello.getProduct().getProductID());
 			ps.setInt(i++, carrello.getUser().getUserID());
-			ps.setInt(i++, carrello.getQuantità());
+			ps.setInt(i++, carrello.getQuantita());
 			ps.setInt(i++, carrello.getCartID());
 			
 			ResultSet resultSet = ps.executeQuery();
@@ -140,7 +138,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 			i = 1;
 			ps.setInt(i++, carrello.getUser().getUserID());
 			ps.setInt(i++, carrello.getProduct().getProductID());
-			ps.setInt(i++, carrello.getQuantità());
+			ps.setInt(i++, carrello.getQuantita());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -173,31 +171,65 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 		
 	}
 	
-	@Override
-	public List<Carrello> findByUserID(int userID) {
+	public List<Carrello> findAll() {
 		
 		PreparedStatement ps;
-		Carrello carrello = null;
-		List<Carrello> carrelli = new ArrayList<>();
+		Carrello carrello;
+		List<Carrello> carrelli = new ArrayList<Carrello>();
 		
 		try {
 			
 			String sql
 					= " SELECT * "
-					+ " FROM carrello "
-					+ " WHERE "
-					+ " userID = ?"
-					+ " AND deleted = 'N' ";
+					+ " FROM (carrello NATURAL JOIN prodotto) "
+					+ " ORDER BY cartID ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, carrello.getUser().getUserID());
-			
 			ResultSet resultSet = ps.executeQuery();
 			
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				carrello = read(resultSet);
 				carrelli.add(carrello);
 			}
+			
+			resultSet.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return carrelli;
+		
+	}
+	
+	@Override
+	public List<Carrello> findByUserID(int userID) {
+		
+		PreparedStatement ps;
+		Carrello carrello;
+		ArrayList<Carrello> carrelli = new ArrayList<Carrello>(40);
+		
+		try {
+			
+			String sql
+					= " SELECT * "
+					+ " FROM (carrello NATURAL JOIN prodotto) "
+					+ " WHERE "
+					+ " userID = ?"
+					+ " AND deleted = 'N' "
+					+ " ORDER BY cartID ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userID);
+			
+			ResultSet resultSet = ps.executeQuery();
+			
+			while (resultSet.next()) {
+				carrello = read(resultSet);
+				carrelli.add(carrello);
+			}
+			
 			resultSet.close();
 			ps.close();
 			
@@ -211,6 +243,13 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 	Carrello read(ResultSet rs) {
 		
 		Carrello carrello = new Carrello();
+		
+		Utente utente = new Utente();
+		carrello.setUser(utente);
+		
+		Prodotto prodotto = new Prodotto();
+		carrello.setProduct(prodotto);
+		
 		try {
 			carrello.setCartID(rs.getInt("cartID"));
 		} catch (SQLException sqle) {
@@ -221,10 +260,12 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 		}
 		try {
 			carrello.getProduct().setProductID(rs.getInt("productID"));
+			carrello.getProduct().setNomeProdotto(rs.getString("nome"));
+			carrello.getProduct().setPrezzoTot(rs.getBigDecimal("prezzoTot"));
 		} catch (SQLException sqle) {
 		}
 		try {
-			carrello.setQuantità(rs.getInt("quantità"));
+			carrello.setQuantita(rs.getInt("quantità"));
 		} catch (SQLException sqle) {
 		}
 		try {

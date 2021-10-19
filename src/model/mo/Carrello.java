@@ -22,8 +22,8 @@ public class Carrello {
 	public Prodotto getProduct() { return this.product; }
 	public void setProduct(Prodotto product) { this.product = product; }
 	
-	public int getQuantità() { return this.quantità; }
-	public void setQuantità(int quantità) { this.quantità = quantità; }
+	public int getQuantita() { return this.quantità; }
+	public void setQuantita(int quantità) { this.quantità = quantità; }
 	
 	public boolean getDeleted() { return this.deleted; }
 	public void setDeleted(boolean deleted) { this.deleted = deleted; }

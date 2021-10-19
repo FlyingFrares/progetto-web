@@ -360,6 +360,7 @@ button {
     margin-top: 3px;
     margin-right: 90px;
     background-color: #2E3138;
+    border-radius: 20px;
     color: white;
     border: none;
     cursor: pointer;
@@ -462,9 +463,8 @@ button:hover {
 .product-price-btn p {
     display: inline-block;
     height: 50px;
-    font-family: 'Trocchi', serif;
     margin: 0 0 0 38px;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: lighter;
     color: #474747;
 }

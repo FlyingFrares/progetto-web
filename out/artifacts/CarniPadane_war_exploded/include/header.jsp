@@ -55,8 +55,6 @@
       </li>
       <%}%>
       <li><a href="javascript:logoutForm.submit()">Logout</a></li>
-      <%}%>
-
       <li <%=menuActiveLink.equals("Carrello")?"class=\"selected\"":""%>>
         <a href="Dispatcher?controllerAction=Cart.view">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" margin="10 20 30 40" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E3138" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -67,6 +65,7 @@
           </svg>
         </a>
       </li>
+      <%}%>
 
       <%if (!loggedOn) {%>
       <!-- < Form per il login > -->

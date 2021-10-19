@@ -59,6 +59,9 @@ public class CookieDAOFactory extends DAOFactory {
 	}
 	
 	@Override
+	public CarrelloDAO getCarrelloDAO() { throw new UnsupportedOperationException("Not supported yet"); }
+	
+	@Override
 	public UtenteDAO getUtenteDAO() {
 		return new UtenteDAOCookieImpl(request, response);
 	}

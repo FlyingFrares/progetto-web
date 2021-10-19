@@ -24,6 +24,8 @@ public abstract class DAOFactory {
 	
 	public abstract UtenteDAO getUtenteDAO();
 	
+	public abstract CarrelloDAO getCarrelloDAO();
+	
 	public static DAOFactory getDAOFactory(String whichFactory,Map factoryParameters) {
 		
 		if (whichFactory.equals(MYSQLJDBCIMPL)) {

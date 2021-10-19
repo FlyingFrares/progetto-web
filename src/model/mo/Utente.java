@@ -17,6 +17,8 @@ public class Utente {
 	/* 1:N */
 	private Ordine[] orders;
 	
+	private Carrello[] carrelli;
+	
 	public int getUserID() { return this.userID; }
 	
 	public void setUserID(int userID) { this.userID = userID; }
@@ -92,5 +94,13 @@ public class Utente {
 	public void setOrders(int index, Ordine orders) {
 		this.orders[index] = orders;
 	}
+	
+	public Carrello[] getCarrelli() { return carrelli; }
+	
+	public void setCarrelli(Carrello[] carrelli) { this.carrelli = carrelli; }
+	
+	public Carrello getCarrelli(int index) { return this.carrelli[index]; }
+	
+	public void setCarrelli(int index, Carrello carrelli) {	this.carrelli[index] = carrelli; }
 	
 }

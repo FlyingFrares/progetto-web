@@ -1,16 +1,19 @@
 <%@page session="false"%>
 <%@page import="model.mo.Utente"%>
-<%@page import="model.mo.Prodotto" %>
+<%@page import="model.mo.Carrello"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@ page import="java.math.BigDecimal" %>
+
 
 <%
   int i = 0;
+  BigDecimal total = new BigDecimal(0);
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
   Utente loggedUser = (Utente) request.getAttribute("loggedUser");
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
   String menuActiveLink = "Carrello";
-  List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
+  List<Carrello> carrelli = (List<Carrello>) request.getAttribute("carrelli");
 %>
 <!DOCTYPE html>
 <html>
@@ -79,57 +82,32 @@
     <%@include file="/include/header.jsp"%>
     <main class="clearfix">
       <div id="site_content">
-        <div class="sidebar">
-          <div class="checkout">
-            <div class="total">
-              <h1>Totale : 6444.18</h1>
-            </div>
-            <button>Checkout</button>
-          </div>
-        </div>
         <div id="content">
+          <%for (i = 0; i<carrelli.size(); i++) {%>
           <div class="Cart-Items">
             <div class="about">
-              <h1 style="color: #2E3138">Apple Juice</h1>
+              <h1 style="color: #2E3138"><%=carrelli.get(i).getProduct().getNomeProdotto()%></h1>
             </div>
             <div class="counter">
                 <div class="btn">+</div>
-                <div class="count">2</div>
+                <div class="count"><%=carrelli.get(i).getQuantita()%></div>
                 <div class="btn">-</div>
               </div>
             <div class="prices">
-              <div class="amount">$2.99</div>
+              <div class="amount"><%=carrelli.get(i).getProduct().getPrezzoTot().multiply(BigDecimal.valueOf(carrelli.get(i).getQuantita()))%> &euro;</div>
               <div class="remove"><u>Remove</u></div>
+              <% total = total.add(carrelli.get(i).getProduct().getPrezzoTot().multiply(BigDecimal.valueOf(carrelli.get(i).getQuantita()))); %>
             </div>
           </div>
-          <div class="Cart-Items">
-            <div class="about">
-              <h1 style="color: #2E3138">Apple Juice</h1>
-            </div>
-            <div class="counter">
-              <div class="btn">+</div>
-              <div class="count">2</div>
-              <div class="btn">-</div>
-            </div>
-            <div class="prices">
-              <div class="amount">$2.99</div>
-              <div class="remove"><u>Remove</u></div>
-            </div>
+          <%}%>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="checkout">
+          <div class="total">
+            <h1>Totale : <%=total%> &euro;</h1>
           </div>
-          <div class="Cart-Items">
-            <div class="about">
-              <h1 style="color: #2E3138">Apple Juice</h1>
-            </div>
-            <div class="counter">
-              <div class="btn">+</div>
-              <div class="count">2</div>
-              <div class="btn">-</div>
-            </div>
-            <div class="prices">
-              <div class="amount">$2.99</div>
-              <div class="remove"><u>Remove</u></div>
-            </div>
-          </div>
+          <button>Checkout</button>
         </div>
       </div>
     </main>

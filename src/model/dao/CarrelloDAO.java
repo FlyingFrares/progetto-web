@@ -19,5 +19,7 @@ public interface CarrelloDAO {
 	
 	public void delete(Carrello carrello);
 	
+	public List<Carrello> findAll();
+	
 	public List<Carrello> findByUserID(int userID);
 }
