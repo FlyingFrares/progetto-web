@@ -26,7 +26,6 @@ public class Category {
 		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;
 		Utente loggedUser;
-		String applicationMessage = null;
 		
 		Logger logger = LogService.getApplicationLogger();
 		
@@ -76,7 +75,6 @@ public class Category {
 		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;
 		Utente loggedUser;
-		String applicationMessage = null;
 		
 		Logger logger = LogService.getApplicationLogger();
 		
@@ -149,9 +147,6 @@ public class Category {
 			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
 			int productID = Integer.parseInt(request.getParameter("productID"));
 			
-			UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
-			Utente utente = utenteDAO.findByUsername(loggedUser.getUsername());
-			
 			ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
 			Prodotto prodotto = prodottoDAO.findByProductId(productID);
 			
@@ -161,7 +156,9 @@ public class Category {
 						prodotto,
 						1);
 				
-			} catch (DuplicatedObjectException e) {
+				applicationMessage = "Aggiunto al carrello";
+				
+			}catch (DuplicatedObjectException e) {
 				applicationMessage = "Prodotto già inserito nel carrello";
 				logger.log(Level.INFO, "Tentativo di inserimento di prodotto già nel carrello");
 			}
@@ -207,12 +204,5 @@ public class Category {
 				prodotti = prodottoDAO.findAll();
 			}
 			request.setAttribute("prodotti", prodotti);
-	}
-	
-	private static void  createItem(DAOFactory daoFactory, DAOFactory sessionDAOFactory, HttpServletRequest request, Utente loggedUser) {
-		
-	
-	
-		
 	}
 }

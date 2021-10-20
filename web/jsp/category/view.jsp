@@ -14,11 +14,15 @@
 %>
 
 <script>
-  function addToCart(productID) {
-      let id = document.getElementById('atc');
-      id.setAttribute('value',productID);
-      document.addToCartForm.submit();
-  }
+    function requestLogin() {
+        alert("Devi effettuare il Login");
+    }
+
+    function addToCart(productID) {
+        let id = document.getElementById('atc');
+        id.setAttribute('value',productID);
+        document.addToCartForm.submit();
+    }
 </script>
 
 <!DOCTYPE html>
@@ -47,7 +51,7 @@
             <% if (prodotti.get(i).getMagazzino() > 0) {%>
             <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
             <% if(!loggedOn) {%>
-            <button type="button" >Effettua il login</button>
+            <button type="button" onclick="requestLogin()">Acquista</button>
             <%} else {%>
             <button type="button" onclick='addToCart(<%=prodotti.get(i).getProductID()%>)'>Acquista</button>
             <%}} else {%>

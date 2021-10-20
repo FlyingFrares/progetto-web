@@ -27,7 +27,6 @@ public class Cart {
 		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;
 		Utente loggedUser;
-		String applicationMessage = null;
 		
 		Logger logger = LogService.getApplicationLogger();
 		

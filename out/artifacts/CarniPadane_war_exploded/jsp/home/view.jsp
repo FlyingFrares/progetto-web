@@ -1,5 +1,7 @@
 <%@page session="false"%>
 <%@page import="model.mo.Utente"%>
+<%@ page import="java.util.List" %>
+<%@ page import="model.mo.Prodotto" %>
 
 <%
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -7,6 +9,18 @@
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
   String menuActiveLink = "Home";
 %>
+
+<script>
+    function requestLogin() {
+        alert("Devi effettuare il Login");
+    }
+
+    function addToCart(productID) {
+        let id = document.getElementById('atc');
+        id.setAttribute('value',productID);
+        document.addToCartForm.submit();
+    }
+</script>
 
 <!DOCTYPE HTML>
 <html>
@@ -39,11 +53,18 @@
                   <div class="product-text">
                     <h1>Gran fico</h1>
                     <h2>Specialit&agrave</h2>
-                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      <br>Quisque aliquet nec lacus ut vulputate.
+                      <br>In molestie, nulla et placerat porttitor, arcu purus dictum augue, eu fringilla augue dolor nec eros.
+                    </p>
                   </div>
                   <div class="product-price-btn">
-                    <p><span>78</span>$</p>
-                    <button type="button">buy now</button>
+                    <p>85.05 &euro;</p>
+                    <% if(!loggedOn) { %>
+                    <button type="button" onclick="requestLogin()">Acquista</button>
+                    <% } else { %>
+                    <button type="button" onclick='addToCart(31)'>Acquista</button>
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -52,17 +73,20 @@
             <div class="mySlides fade">
               <div class="wrapper">
                 <div class="product-img">
-                  <img src="images/gentile.jpg" height="420" width="327">
+                  <img src="images/salame.jpg" height="420" width="327">
                 </div>
                 <div class="product-info">
                   <div class="product-text">
-                    <h1>Harvest Vase</h1>
-                    <h2>by studio and friends</h2>
-                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                    <h1>Il Gentile</h1>
+                    <h2>Prodotti nostrani</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      <br>Quisque aliquet nec lacus ut vulputate.
+                      <br>In molestie, nulla et placerat porttitor, arcu purus dictum augue, eu fringilla augue dolor nec eros.
+                    </p>
                   </div>
                   <div class="product-price-btn">
-                    <p><span>78</span>$</p>
-                    <button type="button">buy now</button>
+                    <p>11.50 &euro;</p>
+                    <button type="button" onclick='addToCart(24)'>Acquista</button>
                   </div>
                 </div>
               </div>
@@ -71,17 +95,20 @@
             <div class="mySlides fade">
               <div class="wrapper">
                 <div class="product-img">
-                  <img src="images/dolce_goccia.jpg" height="420" width="327">
+                  <img src="images/gonzaga.jpg" height="420" width="327">
                 </div>
                 <div class="product-info">
                   <div class="product-text">
-                    <h1>Harvest Vase</h1>
-                    <h2>by studio and friends</h2>
-                    <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces<br> appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                    <h1>Gonzaga</h1>
+                    <h2>Prosciutto crudo</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      <br>Quisque aliquet nec lacus ut vulputate.
+                      <br>In molestie, nulla et placerat porttitor, arcu purus dictum augue, eu fringilla augue dolor nec eros.
+                    </p>
                   </div>
                   <div class="product-price-btn">
-                    <p><span>78</span>$</p>
-                    <button type="button">buy now</button>
+                    <p>110.00 &euro;</p>
+                    <button type="button" onclick='addToCart(8)'>Acquista</button>
                   </div>
                 </div>
               </div>
@@ -126,6 +153,12 @@
           </div>
         </div>
       </div>
+
+      <form name="addToCartForm" action="Dispatcher" method="post">
+        <input type="hidden" id="atc" name="productID"/>
+        <input type="hidden" name="controllerAction" value="Category.addToCart"/>
+      </form>
+
     </main>
     <%@include file="/include/footer.jsp"%>
   </body>

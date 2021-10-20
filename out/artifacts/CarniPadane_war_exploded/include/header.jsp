@@ -47,7 +47,7 @@
 
       <%if (loggedOn) {%>
       <li <%=menuActiveLink.equals("Orders")?"class=\"selected\"":""%>>
-        <a href="Dispatcher?controllerAction=Ordini.view">Ordini</a>
+        <a href="Dispatcher?controllerAction=Orders.view">Ordini</a>
       </li>
       <% if (loggedUser.getAdmin().equals("S")) {%>
       <li <%=menuActiveLink.equals("Admin")?"class=\"selected\"":""%>>
