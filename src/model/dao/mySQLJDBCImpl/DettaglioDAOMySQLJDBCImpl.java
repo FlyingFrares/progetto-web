@@ -25,7 +25,6 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	
 	@Override
 	public Dettaglio create(
-			int detailID,
 			Ordine ordine,
 			Prodotto prodotto,
 			int quantità,
@@ -33,7 +32,6 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 		
 		PreparedStatement ps;
 		Dettaglio dettaglio = new Dettaglio();
-		dettaglio.setDetailID(detailID);
 		dettaglio.setOrder(ordine);
 		dettaglio.setProduct(prodotto);
 		dettaglio.setQuantità(quantità);
@@ -49,8 +47,8 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " productID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dettaglio.getOrder().getOrderID());
-			ps.setInt(2, dettaglio.getProduct().getProductID());
+			ps.setInt(1, ordine.getOrderID());
+			ps.setInt(2, prodotto.getProductID());
 			
 			
 			ResultSet resultSet = ps.executeQuery();

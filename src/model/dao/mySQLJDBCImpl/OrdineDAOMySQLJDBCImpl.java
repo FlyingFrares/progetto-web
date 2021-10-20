@@ -28,8 +28,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	
 	@Override
 	public Ordine create(
-			int orderID,
-			Utente user,
+			Utente utente,
 			String indirizzo,
 			Timestamp data,
 			String stato,
@@ -38,8 +37,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 		
 		PreparedStatement ps;
 		Ordine ordine = new Ordine();
-		ordine.setOrderID(orderID);
-		ordine.setUser(user);
+		ordine.setUser(utente);
 		ordine.setIndirizzo(indirizzo);
 		ordine.setData(data);
 		ordine.setStato(stato);
@@ -58,7 +56,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, ordine.getOrderID());
-			ps.setInt(2, ordine.getUser().getUserID());
+			ps.setInt(2, utente.getUserID());
 			
 			ResultSet resultSet = ps.executeQuery();
 			

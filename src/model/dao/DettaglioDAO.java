@@ -12,7 +12,6 @@ import java.util.List;
 public interface DettaglioDAO {
 	
 	public Dettaglio create (
-			int detailID,
 			Ordine ordine,
 			Prodotto prodotto,
 			int quantità,

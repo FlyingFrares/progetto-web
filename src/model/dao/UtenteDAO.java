@@ -8,7 +8,6 @@ import java.util.List;
 public interface UtenteDAO {
 	
 	public Utente create (
-			int userID,
 			String username,
 			String admin,
 			String password,
