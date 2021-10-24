@@ -15,6 +15,15 @@
   String menuActiveLink = "Carrello";
   List<Carrello> carrelli = (List<Carrello>) request.getAttribute("carrelli");
 %>
+
+<script>
+    function remove(cartID) {
+        let id = document.getElementById("remove");
+        id.setAttribute('value',cartID);
+        document.removeForm.submit();
+    }
+</script>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,44 +32,25 @@
       .Cart-Items{
         margin: auto;
         width: 120%;
-        height: 30%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+      }
+      form {
+        display: flex;
       }
       .counter{
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      .btn{
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background-color: #CBC7E6;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        cursor: pointer;
-      }
-      .count{
-        font-size: 16px;
-        margin: 0px 15px 0px 15px;
-      }
       .prices{
         height: 100%;
         text-align: right;
       }
       .amount{
-        padding-top: 20px;
         font-size: 20px;
-      }
-      .remove{
-        padding-top: 5px;
-        font-size: 14px;
-        color: #E44C4C;
-        cursor: pointer;
+        font-family: monospace;
       }
       hr{
         width: 66%;
@@ -89,13 +79,16 @@
               <h1 style="color: #2E3138"><%=carrelli.get(i).getProduct().getNomeProdotto()%></h1>
             </div>
             <div class="counter">
-                <div class="btn">+</div>
-                <div class="count"><%=carrelli.get(i).getQuantita()%></div>
-                <div class="btn">-</div>
-              </div>
+              <input type="submit" style="color: red; margin-right: 5px" onclick="remove(<%=carrelli.get(i).getCartID()%>)"  value="Rimuovi">
+              <form name="updateForm" action="Dispatcher" method="post">
+                <input type="number" style="width: 40px" name="qty" value="<%=carrelli.get(i).getQuantita()%>" min="1" step="1" required>
+                <input type="hidden" name="cartID" value="<%=carrelli.get(i).getCartID()%>">
+                <input type="hidden" name="controllerAction" value="Cart.modify"/>
+                <input type="submit" style="margin-left: 5px" value="Aggiorna">
+              </form>
+            </div>
             <div class="prices">
               <div class="amount"><%=carrelli.get(i).getProduct().getPrezzoTot().multiply(BigDecimal.valueOf(carrelli.get(i).getQuantita()))%> &euro;</div>
-              <div class="remove"><u>Remove</u></div>
               <% total = total.add(carrelli.get(i).getProduct().getPrezzoTot().multiply(BigDecimal.valueOf(carrelli.get(i).getQuantita()))); %>
             </div>
           </div>
@@ -110,6 +103,12 @@
           <button>Checkout</button>
         </div>
       </div>
+
+      <form name="removeForm" action="Dispatcher" method="post">
+        <input type="hidden" id="remove" name="cartID"/>
+        <input type="hidden" name="controllerAction" value="Cart.removeItem"/>
+      </form>
+
     </main>
     <%@include file="/include/footer.jsp"%>
   </body>

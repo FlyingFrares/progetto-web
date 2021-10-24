@@ -16,7 +16,9 @@ public interface CarrelloDAO {
 	
 	public void update(Carrello carrello) throws DuplicatedObjectException;
 	
-	public void delete(Carrello carrello);
+	public void delete(int cartID);
+	
+	public Carrello findByCartId(int cartID);
 	
 	public List<Carrello> findAll();
 	

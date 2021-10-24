@@ -12,6 +12,7 @@ import java.util.List;
 public interface OrdineDAO {
 	
 	public Ordine create (
+			int orderID,
 			Utente utente,
 			String indirizzo,
 			Timestamp data,

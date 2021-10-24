@@ -25,6 +25,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	
 	@Override
 	public Prodotto create(
+			int productID,
 			String nome,
 			String marchio,
 			String categoria,

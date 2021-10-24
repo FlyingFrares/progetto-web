@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProdottoDAO {
 	
 	public Prodotto create (
+			int ProductID,
 			String nome,
 			String marchio,
 			String categoria,

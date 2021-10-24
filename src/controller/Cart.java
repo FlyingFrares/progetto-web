@@ -6,6 +6,7 @@ import model.dao.ProdottoDAO;
 import model.dao.UtenteDAO;
 import model.mo.Carrello;
 import model.mo.Utente;
+import org.omg.PortableInterceptor.INACTIVE;
 import services.config.Configuration;
 import services.log.LogService;
 
@@ -43,6 +44,115 @@ public class Cart {
 			
 			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
 			daoFactory.beginTransaction();
+			
+			commonView(daoFactory, sessionDAOFactory, request, loggedUser);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "cart/view");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void modify(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			int qty = Integer.parseInt(request.getParameter("qty"));
+			int cartID = Integer.parseInt(request.getParameter("cartID"));
+			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+			Carrello carrello = carrelloDAO.findByCartId(cartID);
+			carrello.setQuantita(qty);
+			carrelloDAO.update(carrello);
+			
+			commonView(daoFactory, sessionDAOFactory, request, loggedUser);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "cart/view");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void removeItem(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			int cartID = Integer.parseInt(request.getParameter("cartID"));
+			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+			carrelloDAO.delete(cartID);
 			
 			commonView(daoFactory, sessionDAOFactory, request, loggedUser);
 			

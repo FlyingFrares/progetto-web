@@ -138,6 +138,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 			ps.setInt(i++, carrello.getUser().getUserID());
 			ps.setInt(i++, carrello.getProduct().getProductID());
 			ps.setInt(i++, carrello.getQuantita());
+			ps.setInt(i++, carrello.getCartID());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -147,7 +148,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 	}
 	
 	@Override
-	public void delete(Carrello carrello) {
+	public void delete(int cartID) {
 		
 		PreparedStatement ps;
 		
@@ -160,7 +161,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 					+ " cartID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, carrello.getCartID());
+			ps.setInt(1, cartID);
 			ps.executeUpdate();
 			ps.close();
 			
@@ -168,6 +169,37 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 			throw new RuntimeException(e);
 		}
 		
+	}
+	
+	public Carrello findByCartId(int cartID) {
+		
+		PreparedStatement ps;
+		Carrello carrello = null;
+		
+		try {
+			
+			String sql
+					= " SELECT * "
+					+ " FROM carrello "
+					+ " WHERE "
+					+ " cartID = ? ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, cartID);
+			
+			ResultSet resultSet = ps.executeQuery();
+			
+			if (resultSet.next()) {
+				carrello = read(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return carrello;
 	}
 	
 	public List<Carrello> findAll() {

@@ -338,25 +338,25 @@ table tr td
 #login {
     float: right;
 }
-
 input {
     font-family: 'Raleway', sans-serif;
     display: flex;
-    margin-top: 3px;
-    margin-right: 90px;
-    padding: 1px;
-    border: none;
     align-items: center;
     text-align: center;
-    color: #2E3138;}
-
+    color: #2E3138;
+}
+input #search {
+margin-top: 3px;
+margin-right: 90px;
+padding: 1px;
+border: none;
+}
 button {
     font-family: 'Raleway', sans-serif;
     display: flex;
     align-items: center;
     text-align: center;
-    float: right;
-    padding: 1px 55px;
+    padding: 1px 58px;
     margin-top: 3px;
     margin-right: 90px;
     background-color: #2E3138;
