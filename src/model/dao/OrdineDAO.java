@@ -12,13 +12,12 @@ import java.util.List;
 public interface OrdineDAO {
 	
 	public Ordine create (
-			int orderID,
 			Utente utente,
+			String destinatario,
 			String indirizzo,
-			Timestamp data,
-			String stato,
 			BigDecimal totale,
-			String IDpagamento) throws DuplicatedObjectException;
+			String IDpagamento,
+			String intestatario) throws DuplicatedObjectException;
 	
 	public void update(Ordine ordine) throws DuplicatedObjectException;
 	
@@ -29,9 +28,4 @@ public interface OrdineDAO {
 	public List<Ordine> findByUserID(int userID);
 	
 	public List<Ordine> findAll();
-	
-	/*
-	setTotale
-	*/
-	
 }

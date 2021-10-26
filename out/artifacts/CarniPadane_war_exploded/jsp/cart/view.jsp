@@ -5,7 +5,6 @@
 <%@page import="java.util.List"%>
 <%@ page import="java.math.BigDecimal" %>
 
-
 <%
   int i = 0;
   BigDecimal total = new BigDecimal(0);
@@ -100,7 +99,7 @@
           <div class="total">
             <h1>Totale : <%=total%> &euro;</h1>
           </div>
-          <button>Checkout</button>
+          <button onclick="location.href='Dispatcher?controllerAction=Cart.checkoutView'">Checkout</button>
         </div>
       </div>
 

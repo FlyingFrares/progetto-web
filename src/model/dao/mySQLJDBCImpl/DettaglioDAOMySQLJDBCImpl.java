@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 import model.dao.DettaglioDAO;
 import model.dao.exception.DuplicatedObjectException;
+import model.mo.Carrello;
 import model.mo.Dettaglio;
 import model.mo.Ordine;
 import model.mo.Prodotto;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +27,13 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	public Dettaglio create(
 			Ordine ordine,
 			Prodotto prodotto,
-			int quantità,
-			BigDecimal subtotale) throws DuplicatedObjectException {
+			int quantità) throws DuplicatedObjectException {
 		
 		PreparedStatement ps;
 		Dettaglio dettaglio = new Dettaglio();
 		dettaglio.setOrder(ordine);
 		dettaglio.setProduct(prodotto);
 		dettaglio.setQuantità(quantità);
-		dettaglio.setSubtotale(subtotale);
 		
 		try {
 			
@@ -78,8 +76,8 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			resultSet.close();
 			
 			sql =   " INSERT INTO dettagliOrdine " +
-					" (detailID, orderID, productID, quantità, subtotale) " +
-					" VALUES (?,?,?,?,?) ";
+					" (detailID, orderID, productID, quantità) " +
+					" VALUES (?,?,?,?) ";
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
@@ -87,7 +85,6 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			ps.setInt(i++, dettaglio.getOrder().getOrderID());
 			ps.setInt(i++, dettaglio.getProduct().getProductID());
 			ps.setInt(i++, dettaglio.getQuantità());
-			ps.setBigDecimal(i++, dettaglio.getSubtotale());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -134,8 +131,7 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 					+ " SET "
 					+ " orderID = ?, "
 					+ " productID = ?, "
-					+ " quantità = ?,"
-					+ " subtotale = ?"
+					+ " quantità = ?"
 					+ " WHERE detailID = ? ";
 			
 			ps = conn.prepareStatement(sql);
@@ -143,7 +139,6 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 			ps.setInt(i++, dettaglio.getOrder().getOrderID());
 			ps.setInt(i++, dettaglio.getProduct().getProductID());
 			ps.setInt(i++, dettaglio.getQuantità());
-			ps.setBigDecimal(i++, dettaglio.getSubtotale());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -275,6 +270,13 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 	Dettaglio read(ResultSet rs) {
 		
 		Dettaglio dettaglio = new Dettaglio();
+		
+		Ordine ordine = new Ordine();
+		dettaglio.setOrder(ordine);
+		
+		Carrello carrello = new Carrello();
+		dettaglio.setProduct(carrello.getProduct());
+		dettaglio.setQuantità(carrello.getQuantita());
 		try {
 			dettaglio.setDetailID(rs.getInt("detailID"));
 		} catch (SQLException sqle) {
@@ -289,10 +291,6 @@ public class DettaglioDAOMySQLJDBCImpl implements DettaglioDAO {
 		}
 		try {
 			dettaglio.setQuantità(rs.getInt("quantità"));
-		} catch (SQLException sqle) {
-		}
-		try {
-			dettaglio.setSubtotale(rs.getBigDecimal("subtotale"));
 		} catch (SQLException sqle) {
 		}
 		

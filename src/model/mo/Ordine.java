@@ -8,11 +8,12 @@ public class Ordine  {
 	
 	private int orderID;
 	private Utente user; /* N:1 */
+	private String destinatario;
 	private String indirizzo;
 	private Timestamp data;
-	private String stato;
 	private BigDecimal totale;
 	private String IDpagamento;
+	private String intestatario;
 	private boolean deleted;
 	
 	/* 1:N */
@@ -34,6 +35,10 @@ public class Ordine  {
 		this.user = user;
 	}
 	
+	public String getDestinatario() { return this.destinatario; }
+	
+	public void setDestinatario(String destinatario) { this.destinatario = destinatario; }
+	
 	public String getIndirizzo() {
 		return this.indirizzo;
 	}
@@ -48,14 +53,6 @@ public class Ordine  {
 	
 	public void setData(Timestamp data) {
 		this.data = data;
-	}
-	
-	public String getStato() {
-		return this.stato;
-	}
-	
-	public void setStato(String stato) {
-		this.stato = stato;
 	}
 	
 	public BigDecimal getTotale() {
@@ -73,6 +70,10 @@ public class Ordine  {
 	public void setIDpagamento(String IDpagamento) {
 		this.IDpagamento = IDpagamento;
 	}
+	
+	public String getIntestatario() { return this.intestatario; }
+	
+	public void setIntestatario(String intestatario) { this.intestatario = intestatario; }
 	
 	public boolean getDeleted() {
 		return this.deleted;

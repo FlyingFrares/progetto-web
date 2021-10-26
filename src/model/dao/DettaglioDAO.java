@@ -14,8 +14,7 @@ public interface DettaglioDAO {
 	public Dettaglio create (
 			Ordine ordine,
 			Prodotto prodotto,
-			int quantità,
-			BigDecimal subtotale) throws DuplicatedObjectException;
+			int quantità) throws DuplicatedObjectException;
 	
 	public void update(Dettaglio dettaglio) throws DuplicatedObjectException;
 	

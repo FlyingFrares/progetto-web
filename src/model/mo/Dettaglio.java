@@ -1,8 +1,5 @@
 package model.mo;
 
-import java.sql.*;
-import java.math.*;
-
 public class Dettaglio {
 	
 	
@@ -11,7 +8,6 @@ public class Dettaglio {
 	private Prodotto product; /* 1:1 */
 	
 	private int quantità;
-	private BigDecimal subtotale;
 	
 	
 	
@@ -43,14 +39,6 @@ public class Dettaglio {
 	
 	public void setQuantità(int quantità) {
 		this.quantità = quantità;
-	}
-	
-	public BigDecimal getSubtotale() {
-		return this.subtotale;
-	}
-	
-	public void setSubtotale(BigDecimal subtotale) {
-		this.subtotale = subtotale;
 	}
 	
 }

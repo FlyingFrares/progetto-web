@@ -1,49 +1,46 @@
 package model.dao.mySQLJDBCImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
+import model.dao.*;
 import model.dao.exception.DuplicatedObjectException;
-import model.mo.Ordine;
-import model.dao.OrdineDAO;
-import model.mo.Utente;
+import model.mo.*;
 
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.util.Date;
+
 
 
 public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	
 	private final String COUNTER_ID = "orderID";
 	Connection conn;
+	String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	
-	public OrdineDAOMySQLJDBCImpl(Connection conn) {
-		this.conn = conn;
-	}
+	public OrdineDAOMySQLJDBCImpl(Connection conn) { this.conn = conn; }
 	
 	
 	@Override
 	public Ordine create(
-			int orderID,
 			Utente utente,
+			String destinatario,
 			String indirizzo,
-			Timestamp data,
-			String stato,
 			BigDecimal totale,
-			String IDpagamento) throws DuplicatedObjectException {
+			String IDpagamento,
+			String intestatario) throws DuplicatedObjectException {
 		
 		PreparedStatement ps;
 		Ordine ordine = new Ordine();
 		ordine.setUser(utente);
+		ordine.setDestinatario(destinatario);
 		ordine.setIndirizzo(indirizzo);
-		ordine.setData(data);
-		ordine.setStato(stato);
 		ordine.setTotale(totale);
 		ordine.setIDpagamento(IDpagamento);
+		ordine.setIntestatario(intestatario);
 		
 		try {
 			
@@ -51,13 +48,14 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					= " SELECT orderID "
 					+ " FROM ordine "
 					+ " WHERE "
-					+ " deleted = 'N' AND"
-					+ " orderID = ? AND "
-					+ " userID = ? ";
-					
+					+ " deleted = 'N' AND "
+					+ " userID = ? AND "
+					+ " data = ? ";
+			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, ordine.getOrderID());
-			ps.setInt(2, utente.getUserID());
+			ps.setInt(1, utente.getUserID());
+			ps.setString(2, timeStamp);
+			
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -66,7 +64,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			resultSet.close();
 			
 			if (exist) {
-				throw new DuplicatedObjectException("OrdineDAOMySQLJDBCImpl.create: Tentativo di inserimento di un ordine già esistente.");
+				throw new DuplicatedObjectException("DettaglioDAOMySQLJDBCImpl.create: Tentativo di inserimento di un elemento già esistente.");
 			}
 			
 			/* Eseguo il lock per evitare transazioni concorrenti */
@@ -86,18 +84,18 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			resultSet.close();
 			
 			sql =   " INSERT INTO ordine " +
-					" ( orderID, userID, indirizzo, data, stato, totale, IDpagamento, deleted ) " +
+					" ( orderID, userID, destinatario, indirizzo, totale, IDpagamento, intestatario, deleted ) " +
 					" VALUES (?,?,?,?,?,?,?,'N')";
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;
 			ps.setInt(i++, ordine.getOrderID());
 			ps.setInt(i++, ordine.getUser().getUserID());
+			ps.setString(i++, ordine.getDestinatario());
 			ps.setString(i++, ordine.getIndirizzo());
-			ps.setTimestamp(i++, ordine.getData());
-			ps.setString(i++, ordine.getStato());
 			ps.setBigDecimal(i++, ordine.getTotale());
 			ps.setString(i++, ordine.getIDpagamento());
+			ps.setString(i++, ordine.getIntestatario());
 			ps.executeUpdate();
 			
 		}  catch (SQLException e) {
@@ -148,7 +146,6 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " SET "
 					+ " indirizzo = ?, "
 					+ " data = ?, "
-					+ " stato = ?, "
 					+ " totale = ?, "
 					+ " IDpagamento = ? "
 					+ " WHERE "
@@ -158,7 +155,6 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			i = 1;
 			ps.setString(i++, ordine.getIndirizzo());
 			ps.setTimestamp(i++, ordine.getData());
-			ps.setString(i++, ordine.getStato());
 			ps.setBigDecimal(i++, ordine.getTotale());
 			ps.setString(i++, ordine.getIDpagamento());
 			ps.setInt(i++, ordine.getOrderID());
@@ -291,12 +287,19 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	Ordine read(ResultSet rs) {
 		
 		Ordine ordine = new Ordine();
+		
+		Utente utente = new Utente();
+		ordine.setUser(utente);
 		try {
 			ordine.setOrderID(rs.getInt("orderID"));
 		} catch (SQLException sqle) {
 		}
 		try {
 			ordine.getUser().setUserID(rs.getInt("userID"));
+		} catch (SQLException sqle) {
+		}
+		try {
+			ordine.setDestinatario(rs.getString("destinatario"));
 		} catch (SQLException sqle) {
 		}
 		try {
@@ -313,6 +316,10 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 		}
 		try {
 			ordine.setIDpagamento(rs.getString("IDpagamento"));
+		} catch (SQLException sqle) {
+		}
+		try {
+			ordine.setIntestatario(rs.getString("intestatario"));
 		} catch (SQLException sqle) {
 		}
 		try {
