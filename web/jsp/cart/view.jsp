@@ -80,7 +80,7 @@
             <div class="counter">
               <input type="submit" style="color: red; margin-right: 5px" onclick="remove(<%=carrelli.get(i).getCartID()%>)"  value="Rimuovi">
               <form name="updateForm" action="Dispatcher" method="post">
-                <input type="number" style="width: 40px" name="qty" value="<%=carrelli.get(i).getQuantita()%>" min="1" step="1" required>
+                <input type="number" style="width: 40px" name="qty" value="<%=carrelli.get(i).getQuantita()%>" min="1" step="1" max="<%=carrelli.get(i).getProduct().getMagazzino()%>" required>
                 <input type="hidden" name="cartID" value="<%=carrelli.get(i).getCartID()%>">
                 <input type="hidden" name="controllerAction" value="Cart.modify"/>
                 <input type="submit" style="margin-left: 5px" value="Aggiorna">

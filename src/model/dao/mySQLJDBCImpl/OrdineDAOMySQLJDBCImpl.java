@@ -84,8 +84,8 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			resultSet.close();
 			
 			sql =   " INSERT INTO ordine " +
-					" ( orderID, userID, destinatario, indirizzo, totale, IDpagamento, intestatario, deleted ) " +
-					" VALUES (?,?,?,?,?,?,?,'N')";
+					" ( orderID, userID, destinatario, indirizzo, totale, IDpagamento, intestatario, stato, deleted ) " +
+					" VALUES (?,?,?,?,?,?,?,'Evaso','N')";
 			
 			ps = conn.prepareStatement(sql);
 			int i = 1;

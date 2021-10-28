@@ -14,6 +14,7 @@ public class Ordine  {
 	private BigDecimal totale;
 	private String IDpagamento;
 	private String intestatario;
+	private String stato;
 	private boolean deleted;
 	
 	/* 1:N */
@@ -74,6 +75,10 @@ public class Ordine  {
 	public String getIntestatario() { return this.intestatario; }
 	
 	public void setIntestatario(String intestatario) { this.intestatario = intestatario; }
+	
+	public String getStato() { return this.stato; }
+	
+	public void setStato(String stato) { this.stato = stato; }
 	
 	public boolean getDeleted() {
 		return this.deleted;

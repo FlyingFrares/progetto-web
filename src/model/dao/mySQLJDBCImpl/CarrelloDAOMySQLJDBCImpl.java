@@ -292,6 +292,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 		try {
 			carrello.getProduct().setProductID(rs.getInt("productID"));
 			carrello.getProduct().setNomeProdotto(rs.getString("nome"));
+			carrello.getProduct().setMagazzino(rs.getInt("magazzino"));
 			carrello.getProduct().setPrezzoTot(rs.getBigDecimal("prezzoTot"));
 		} catch (SQLException sqle) {
 		}

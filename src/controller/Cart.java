@@ -5,6 +5,7 @@ import model.dao.*;
 import model.dao.exception.DuplicatedObjectException;
 import model.mo.Carrello;
 import model.mo.Ordine;
+import model.mo.Prodotto;
 import model.mo.Utente;
 import services.config.Configuration;
 import services.log.LogService;
@@ -144,6 +145,7 @@ public class Cart {
 			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
 			daoFactory.beginTransaction();
 			
+			/* Blocco di inserimento ordine */
 			String destinatario = request.getParameter("name");
 			String via = request.getParameter("address");
 			String citta = request.getParameter("city");
@@ -170,6 +172,23 @@ public class Cart {
 				applicationMessage = "Ordine non confermato";
 				logger.log(Level.INFO, "Errore Ordine");
 			}
+			
+			/* Blocco di gestione magazzino */
+			
+			List<Carrello> carrelli;
+			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+			carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
+			for (int i = 0; i<carrelli.size(); i++)
+			{
+				Carrello carrello = carrelli.get(i);
+				ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+				Prodotto prodotto = prodottoDAO.findByProductId(carrello.getProduct().getProductID());
+				int magazzino = prodotto.getMagazzino() - carrello.getQuantita();
+				prodotto.setMagazzino(magazzino);
+				prodottoDAO.update(prodotto);
+				carrelloDAO.delete(carrello.getCartID());
+			}
+			
 			
 			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
