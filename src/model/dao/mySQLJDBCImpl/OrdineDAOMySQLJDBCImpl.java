@@ -166,7 +166,7 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 	}
 	
 	@Override
-	public void delete(Ordine ordine) {
+	public void delete(int orderID) {
 		
 		PreparedStatement ps;
 		
@@ -178,10 +178,10 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 					+ " WHERE "
 					+ " orderID = ? ";
 					
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1, ordine.getOrderID());
-				ps.executeUpdate();
-				ps.close();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, orderID);
+			ps.executeUpdate();
+			ps.close();
 				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -320,6 +320,10 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 		}
 		try {
 			ordine.setIntestatario(rs.getString("intestatario"));
+		} catch (SQLException sqle) {
+		}
+		try {
+			ordine.setStato(rs.getString("stato"));
 		} catch (SQLException sqle) {
 		}
 		try {

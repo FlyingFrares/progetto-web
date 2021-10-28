@@ -21,7 +21,7 @@ public interface OrdineDAO {
 	
 	public void update(Ordine ordine) throws DuplicatedObjectException;
 	
-	public void delete(Ordine ordine);
+	public void delete(int OrderID);
 	
 	public Ordine findByOrderID(int orderID);
 	
