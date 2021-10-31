@@ -222,6 +222,39 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 	}
 	
 	@Override
+	public Utente findByUserID(int userID) {
+		
+		PreparedStatement ps;
+		Utente utente = null;
+		
+		try {
+			
+			String sql
+					= " SELECT * "
+					+ " FROM utente "
+					+ " WHERE "
+					+ " userID = ?"
+					+ " AND deleted = 'N' ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userID);
+			
+			ResultSet resultSet = ps.executeQuery();
+			
+			if (resultSet.next()) {
+				utente = read(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return utente;
+	}
+	
+	@Override
 	public Utente findByEmail(String email) {
 		
 		PreparedStatement ps;
@@ -258,7 +291,8 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 	public List<Utente> findAll() {
 		
 		PreparedStatement ps;
-		List<Utente> utenti = new ArrayList<Utente>(20);
+		Utente utente;
+		List<Utente> utenti = new ArrayList<Utente>();
 		
 		try {
 			
@@ -272,9 +306,12 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 			ResultSet resultSet = ps.executeQuery();
 			
 			while (resultSet.next()) {
-				Utente u = read(resultSet);
-				utenti.add(u);
+				utente = read(resultSet);
+				utenti.add(utente);
 			}
+			
+			resultSet.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

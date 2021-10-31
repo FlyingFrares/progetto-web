@@ -46,12 +46,18 @@
       </li>
 
       <%if (loggedOn) {%>
+      <%if (loggedUser.getAdmin().equals("S")) {%>
+      <li <%=menuActiveLink.equals("Orders")?"class=\"selected\"":""%>>
+        <a href="Dispatcher?controllerAction=Orders.adminView">Ordini</a>
+      </li>
+      <%} else {%>
       <li <%=menuActiveLink.equals("Orders")?"class=\"selected\"":""%>>
         <a href="Dispatcher?controllerAction=Orders.view">Ordini</a>
       </li>
+      <%}%>
       <% if (loggedUser.getAdmin().equals("S")) {%>
       <li <%=menuActiveLink.equals("Admin")?"class=\"selected\"":""%>>
-        <a href="Dispatcher?controllerAction=Home.view">Impostazioni</a>
+        <a href="Dispatcher?controllerAction=Home.view">Gestionale</a>
       </li>
       <%}%>
       <li><a href="javascript:logoutForm.submit()">Logout</a></li>

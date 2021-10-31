@@ -24,6 +24,8 @@ public interface UtenteDAO {
 	
 	public Utente findByUsername(String username);
 	
+	public Utente findByUserID(int userID);
+	
 	public Utente findByEmail(String email);
 	
 	public List<Utente> findAll();

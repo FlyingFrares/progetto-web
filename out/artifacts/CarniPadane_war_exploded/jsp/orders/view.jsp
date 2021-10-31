@@ -14,14 +14,6 @@
   String menuActiveLink = "Orders";
   List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
 %>
-<script>
-
-    function deleteOrder(orderID) {
-        let id = document.getElementById('del');
-        id.setAttribute('value',orderID);
-        document.deleteOrderForm.submit();
-    }
-</script>
 
 <!DOCTYPE html>
 <html>
@@ -80,7 +72,6 @@
               <th>Totale</th>
               <th>Numero carta</th>
               <th>Stato</th>
-              <th>Cancella</th>
             </tr>
             <%for (i = 0; i<ordini.size(); i++) {%>
             <tr>
@@ -91,21 +82,12 @@
               <td><%=ordini.get(i).getTotale()%> &euro;</td>
               <td><%=ordini.get(i).getIDpagamento()%></td>
               <td><%=ordini.get(i).getStato()%></td>
-              <td>
-                <button class="button" onclick="deleteOrder(<%=ordini.get(i).getOrderID()%>)"><span></span></button>
-              </td>
             </tr>
             <%}%>
           </table>
         </div>
       </div>
     </main>
-
-    <form name="deleteOrderForm" action="Dispatcher" method="post">
-      <input type="hidden" id="del" name="orderID"/>
-      <input type="hidden" name="controllerAction" value="Orders.deleteOrder"/>
-    </form>
-
     <%@include file="/include/footer.jsp"%>
   </body>
 </html>

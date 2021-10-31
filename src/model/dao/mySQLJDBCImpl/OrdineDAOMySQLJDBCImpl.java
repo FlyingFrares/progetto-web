@@ -144,19 +144,17 @@ public class OrdineDAOMySQLJDBCImpl implements OrdineDAO {
 			sql
 					= " UPDATE ordine "
 					+ " SET "
+					+ " destinatario = ?, "
 					+ " indirizzo = ?, "
-					+ " data = ?, "
-					+ " totale = ?, "
-					+ " IDpagamento = ? "
+					+ " stato = ? "
 					+ " WHERE "
 					+ " orderID = ? ";
 			
 			ps = conn.prepareStatement(sql);
 			i = 1;
+			ps.setString(i++, ordine.getDestinatario());
 			ps.setString(i++, ordine.getIndirizzo());
-			ps.setTimestamp(i++, ordine.getData());
-			ps.setBigDecimal(i++, ordine.getTotale());
-			ps.setString(i++, ordine.getIDpagamento());
+			ps.setString(i++, ordine.getStato());
 			ps.setInt(i++, ordine.getOrderID());
 			ps.executeUpdate();
 			
