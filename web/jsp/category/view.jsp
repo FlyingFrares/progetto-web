@@ -34,32 +34,39 @@
     <%@include file="/include/header.jsp"%>
     <main class="clearfix">
       <div id="site_content">
-        <%@include file="/include/sidebar.jsp"%>
-        <div id="content">
-      <%for (i = 0; i<prodotti.size(); i++) {%>
-        <div class="product-info">
-          <div class="product-text">
-            <h1><%=prodotti.get(i).getNomeProdotto()%></h1>
-            <h2><%=prodotti.get(i).getCategoria()%></h2>
-            <p>
-              Disponibilit&agrave : <%=prodotti.get(i).getMagazzino()%><br>
-              Prezzo/Kg : <%=prodotti.get(i).getPrezzoKg()%> &euro;<br>
-              Peso : <%=prodotti.get(i).getPeso()%> Kg
-            </p>
-          </div>
-          <div class="product-price-btn">
-            <% if (prodotti.get(i).getMagazzino() > 0) {%>
-            <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
-            <% if(!loggedOn) {%>
-            <button type="button" onclick="requestLogin()">Acquista</button>
-            <%} else {%>
-            <button type="button" onclick='addToCart(<%=prodotti.get(i).getProductID()%>)'>Acquista</button>
-            <%}} else {%>
-            <p>Non disponibile</p>
-            <%}%>
-          </div>
+        <div class="sidebar">
+          <%@include file="/include/sidebar.jsp"%>
+          <%if (loggedUser.getAdmin().equals("S")) {%>
+          <h3>Amministrazione</h3>
+          <button type="button">Aggiungi prodotto</button>
+          <%}%>
         </div>
-      <%}%>
+        <div id="content">
+        <%for (i = 0; i<prodotti.size(); i++) {%>
+          <div class="product-info">
+            <div class="product-text">
+              <h1><%=prodotti.get(i).getNomeProdotto()%></h1>
+              <h2><%=prodotti.get(i).getCategoria()%></h2>
+              <p>
+                Disponibilit&agrave : <%=prodotti.get(i).getMagazzino()%><br>
+                Prezzo/Kg : <%=prodotti.get(i).getPrezzoKg()%> &euro;<br>
+                Peso : <%=prodotti.get(i).getPeso()%> Kg
+                <button type="button" onclick="">Modifica</button>
+              </p>
+            </div>
+            <div class="product-price-btn">
+              <% if (prodotti.get(i).getMagazzino() > 0) {%>
+              <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
+              <% if(!loggedOn) {%>
+              <button type="button" onclick="requestLogin()">Acquista</button>
+              <%} else {%>
+              <button type="button" onclick='addToCart(<%=prodotti.get(i).getProductID()%>)'>Acquista</button>
+              <%}} else {%>
+              <p>Non disponibile</p>
+              <%}%>
+            </div>
+          </div>
+          <%}%>
         </div>
       </div>
 

@@ -40,7 +40,13 @@
     <%@include file="/include/header.jsp"%>
     <main class="clearfix">
       <div id="site_content">
-       <%@include file="/include/sidebar.jsp"%>
+        <div class="sidebar">
+          <%@include file="/include/sidebar.jsp"%>
+          <%if (loggedUser.getAdmin().equals("S")) {%>
+          <h3>Amministrazione</h3>
+          <button type="button">Aggiungi prodotto</button>
+          <%}%>
+        </div>
         <div id="content">
           <!-- insert the page content here -->
           <div class="slideshow-container">
