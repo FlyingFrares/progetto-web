@@ -9,15 +9,13 @@ import java.util.List;
 public interface ProdottoDAO {
 	
 	public Prodotto create (
-			int ProductID,
 			String nome,
 			String marchio,
 			String categoria,
 			String descrizione,
 			int magazzino,
 			BigDecimal prezzoKg,
-			BigDecimal peso,
-			BigDecimal prezzoTot) throws DuplicatedObjectException;
+			BigDecimal peso) throws DuplicatedObjectException;
 	
 	public void update(Prodotto prodotto) throws DuplicatedObjectException;
 	

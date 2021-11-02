@@ -25,15 +25,13 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 	
 	@Override
 	public Prodotto create(
-			int productID,
 			String nome,
 			String marchio,
 			String categoria,
 			String descrizione,
 			int magazzino,
 			BigDecimal prezzoKg,
-			BigDecimal peso,
-			BigDecimal prezzoTot) throws DuplicatedObjectException {
+			BigDecimal peso) throws DuplicatedObjectException {
 		
 		PreparedStatement ps;
 		Prodotto prodotto = new Prodotto();
@@ -44,7 +42,6 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 		prodotto.setMagazzino(magazzino);
 		prodotto.setPrezzoKg(prezzoKg);
 		prodotto.setPeso(peso);
-		prodotto.setPrezzoTot(prezzoTot);
 		
 		try {
 			
@@ -53,11 +50,13 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 					+ " FROM prodotto "
 					+ " WHERE "
 					+ " nome = ? AND "
-					+ " productID = ? ";
+					+ " marchio = ? AND "
+					+ " categoria = ? ";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, prodotto.getNomeProdotto());
-			ps.setInt(2, prodotto.getProductID());
+			ps.setString(2, prodotto.getMarchio());
+			ps.setString(3, prodotto.getCategoria());
 			
 			ResultSet resultSet = ps.executeQuery();
 			
@@ -86,7 +85,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			resultSet.close();
 			
 			sql =   " INSERT INTO prodotto " +
-					" (productID, nome, marchio, categoria, descrizione, magazzino, prezzoKg, peso) " +
+					" ( productID, nome, marchio, categoria, descrizione, magazzino, prezzoKg, peso ) " +
 					" VALUES (?,?,?,?,?,?,?,?)";
 			
 			ps = conn.prepareStatement(sql);
@@ -99,7 +98,7 @@ public class ProdottoDAOMySQLJDBCImpl implements ProdottoDAO {
 			ps.setInt(i++, prodotto.getMagazzino());
 			ps.setBigDecimal(i++, prodotto.getPrezzoKg());
 			ps.setBigDecimal(i++, prodotto.getPeso());
-			/* ps.setBigDecimal(i++, prodotto.getPrezzoTot()); */
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

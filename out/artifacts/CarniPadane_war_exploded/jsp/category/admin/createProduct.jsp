@@ -3,7 +3,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="model.mo.Prodotto" %>
 
 <%
   int i = 0;
@@ -12,7 +11,6 @@
   Utente loggedUser = (Utente) request.getAttribute("loggedUser");
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
   String menuActiveLink = "Category";
-  Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
 %>
 
 <!DOCTYPE html>
@@ -97,27 +95,29 @@
               <div class="col">
                 <h3>Descrizione prodotto</h3>
                 <label for="name">Nome</label>
-                <input type="text" id="name" name="name" placeholder="<%=prodotto.getNomeProdotto()%>">
+                <input type="text" id="name" name="name" required>
                 <label for="brand">Marchio</label>
-                <input type="text" id="brand" name="brand" placeholder="<%=prodotto.getMarchio()%>">
+                <input type="text" id="brand" name="brand" required>
                 <label for="cat">Categoria</label>
-                <input type="text" id="cat" name="category" placeholder="<%=prodotto.getCategoria()%>">
+                <input type="text" id="cat" name="category" required>
+
               </div>
 
               <div class="col">
                 <h3>Inventario</h3>
                 <label for="mag">Magazzino</label>
-                <input type="number" id="mag" name="magazine" min="0" step="1" placeholder="<%=prodotto.getMagazzino()%>">
+                <input type="number" id="mag" name="magazine" step="1" required>
                 <label for="price">Prezzo al Kg</label>
-                <input type="number" id="price" name="price" min="0" step="0.01" placeholder="<%=prodotto.getPrezzoKg()%>">
+                <input type="number" id="price" name="price" step="0.01" required>
                 <label for="weight">Peso</label>
-                <input type="number" id="weight" name="weight" min="0" step="0.01" placeholder="<%=prodotto.getPeso()%>">
+                <input type="number" id="weight" name="weight" step="0.01" required>
 
               </div>
 
             </div>
-            <input type="hidden" name="productID" value="<%=prodotto.getProductID()%>">
-            <input type="hidden" name="controllerAction" value="Category.modifyProduct">
+            <label for="descr">Descrizione</label>
+            <input type="text" id="descr" name="description">
+            <input type="hidden" name="controllerAction" value="Category.createProduct">
             <input type="submit" value="conferma" class="btn">
           </form>
           <form name="discardForm" action="Dispatcher" method="post">

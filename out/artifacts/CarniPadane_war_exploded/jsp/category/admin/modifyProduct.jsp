@@ -107,11 +107,11 @@
               <div class="col">
                 <h3>Inventario</h3>
                 <label for="mag">Magazzino</label>
-                <input type="number" id="mag" name="magazine" step="1" placeholder="<%=prodotto.getMagazzino()%>">
+                <input type="number" id="mag" name="magazine" min="0" step="1" placeholder="<%=prodotto.getMagazzino()%>">
                 <label for="price">Prezzo al Kg</label>
-                <input type="number" id="price" name="price" step="0.01" placeholder="<%=prodotto.getPrezzoKg()%>">
+                <input type="number" id="price" name="price" min="0" step="0.01" placeholder="<%=prodotto.getPrezzoKg()%>">
                 <label for="weight">Peso</label>
-                <input type="number" id="weight" name="weight" step="0.01" placeholder="<%=prodotto.getPeso()%>">
+                <input type="number" id="weight" name="weight" min="0" step="0.01" placeholder="<%=prodotto.getPeso()%>">
 
               </div>
 

@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.xml.internal.ws.api.BindingID;
 import model.dao.*;
 import model.dao.exception.DuplicatedObjectException;
 import model.dao.mySQLJDBCImpl.CarrelloDAOMySQLJDBCImpl;
@@ -303,6 +304,126 @@ public class Category {
 			
 			try {
 				prodottoDAO.update(prodotto);
+				
+			}catch (DuplicatedObjectException e) {
+				logger.log(Level.INFO, "Errore Modifica Prodotto");
+			}
+			
+			commonView(daoFactory, sessionDAOFactory, request);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "category/view");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void createProductView(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "category/admin/createProduct");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void createProduct(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			String nome = request.getParameter("name");
+			String marchio = request.getParameter("brand");
+			String categoria = request.getParameter("category");
+			int magazzino = Integer.parseInt(request.getParameter("magazine"));
+			BigDecimal prezzo = new BigDecimal(request.getParameter("price"));
+			BigDecimal peso = new BigDecimal(request.getParameter("weight"));
+			String descrizione = request.getParameter("description");
+			
+			ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+			
+			try {
+				prodottoDAO.create(
+						nome,
+						marchio,
+						categoria,
+						descrizione,
+						magazzino,
+						prezzo,
+						peso);
 				
 			}catch (DuplicatedObjectException e) {
 				logger.log(Level.INFO, "Errore Modifica Prodotto");

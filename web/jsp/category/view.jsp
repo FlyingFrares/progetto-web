@@ -25,6 +25,10 @@
         id.setAttribute('value', productID);
         document.modifyProductForm.submit();
     }
+
+    function createProduct() {
+        document.createProductForm.submit();
+    }
 </script>
 
 <!DOCTYPE html>
@@ -40,7 +44,7 @@
           <%@include file="/include/sidebar.jsp"%>
           <%if (loggedUser.getAdmin().equals("S")) {%>
           <h3>Amministrazione</h3>
-          <button type="button">Aggiungi prodotto</button>
+          <button type="button" onclick="createProduct()">Aggiungi prodotto</button>
           <%}%>
         </div>
         <div id="content">
@@ -82,6 +86,10 @@
       <form name="modifyProductForm" action="Dispatcher" method="post">
         <input type="hidden" id="modify" name="productID"/>
         <input type="hidden" name="controllerAction" value="Category.modifyProductView"/>
+      </form>
+
+      <form name="createProductForm" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Category.createProductView"/>
       </form>
 
     </main>
