@@ -14,14 +14,16 @@
 %>
 
 <script>
-    function requestLogin() {
-        alert("Devi effettuare il Login");
-    }
-
     function addToCart(productID) {
         let id = document.getElementById('atc');
         id.setAttribute('value',productID);
         document.addToCartForm.submit();
+    }
+
+    function modifyProduct(productID) {
+        let id = document.getElementById('modify');
+        id.setAttribute('value', productID);
+        document.modifyProductForm.submit();
     }
 </script>
 
@@ -51,14 +53,16 @@
                 Disponibilit&agrave : <%=prodotti.get(i).getMagazzino()%><br>
                 Prezzo/Kg : <%=prodotti.get(i).getPrezzoKg()%> &euro;<br>
                 Peso : <%=prodotti.get(i).getPeso()%> Kg
-                <button type="button" onclick="">Modifica</button>
+                <%if (loggedUser.getAdmin().equals("S")) {%>
+                <button type="button" onclick="modifyProduct(<%=prodotti.get(i).getProductID()%>)">Modifica</button>
+                <%}%>
               </p>
             </div>
             <div class="product-price-btn">
               <% if (prodotti.get(i).getMagazzino() > 0) {%>
               <p><%=prodotti.get(i).getPrezzoTot()%> &euro;</p>
               <% if(!loggedOn) {%>
-              <button type="button" onclick="requestLogin()">Acquista</button>
+              <button type="button" onclick="alert('Devi effettuare il Login')">Acquista</button>
               <%} else {%>
               <button type="button" onclick='addToCart(<%=prodotti.get(i).getProductID()%>)'>Acquista</button>
               <%}} else {%>
@@ -73,6 +77,11 @@
       <form name="addToCartForm" action="Dispatcher" method="post">
         <input type="hidden" id="atc" name="productID"/>
         <input type="hidden" name="controllerAction" value="Category.addToCart"/>
+      </form>
+
+      <form name="modifyProductForm" action="Dispatcher" method="post">
+        <input type="hidden" id="modify" name="productID"/>
+        <input type="hidden" name="controllerAction" value="Category.modifyProductView"/>
       </form>
 
     </main>

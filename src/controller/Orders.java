@@ -269,7 +269,7 @@ public class Orders {
 				ordineDAO.update(ordine);
 				
 			}catch (DuplicatedObjectException e) {
-				logger.log(Level.INFO, "Errore Ordine");
+				logger.log(Level.INFO, "Errore Modifica Ordine");
 			}
 			
 			commonViewAdmin(daoFactory, sessionDAOFactory, request, ordine.getUser());

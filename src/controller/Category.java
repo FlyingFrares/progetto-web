@@ -9,6 +9,7 @@ import services.log.LogService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.List;
@@ -171,6 +172,149 @@ public class Category {
 			request.setAttribute("loggedOn", loggedUser != null);
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("applicationMessage", applicationMessage);
+			request.setAttribute("viewUrl", "category/view");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void modifyProductView(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			int productID = Integer.parseInt(request.getParameter("productID"));
+			ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+			Prodotto prodotto = prodottoDAO.findByProductId(productID);
+			request.setAttribute("prodotto", prodotto);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "category/admin/modifyProduct");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void modifyProduct(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			String nome = request.getParameter("name");
+			String marchio = request.getParameter("brand");
+			String categoria = request.getParameter("category");
+			String magazzino = request.getParameter("magazine");
+			String prezzo = request.getParameter("price");
+			String peso = request.getParameter("weight");
+			int productID = Integer.parseInt(request.getParameter("productID"));
+			
+			ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+			Prodotto prodotto = prodottoDAO.findByProductId(productID);
+			
+			if (!nome.equals("")) {
+				prodotto.setNomeProdotto(nome);
+			}
+			if (!marchio.equals("")) {
+				prodotto.setMarchio(marchio);
+			}
+			if (!categoria.equals("")) {
+				prodotto.setCategoria(categoria);
+			}
+			if (!magazzino.equals(""))
+			{
+				prodotto.setMagazzino(Integer.parseInt(magazzino));
+			}
+			if (!prezzo.equals("")) {
+				
+				BigDecimal price = new BigDecimal(prezzo);
+				prodotto.setPrezzoKg(price);
+			}
+			if (!peso.equals("")) {
+				
+				BigDecimal weight = new BigDecimal(peso);
+				prodotto.setPeso(weight);
+			}
+			
+			try {
+				prodottoDAO.update(prodotto);
+				
+			}catch (DuplicatedObjectException e) {
+				logger.log(Level.INFO, "Errore Modifica Prodotto");
+			}
+			
+			commonView(daoFactory, sessionDAOFactory, request);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/view");
 			
 			/* Blocco Standard per la gestione degli errori */

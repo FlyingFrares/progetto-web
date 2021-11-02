@@ -99,7 +99,11 @@
           <div class="total">
             <h1>Totale : <%=total%> &euro;</h1>
           </div>
+          <%if (total.compareTo(new BigDecimal(0)) > 0) {%>
           <button onclick="location.href='Dispatcher?controllerAction=Cart.checkoutView'">Checkout</button>
+          <%} else {%>
+          <button onclick="alert('Il carrello &egrave; vuoto !')">Checkout</button>
+          <%}%>
         </div>
       </div>
 

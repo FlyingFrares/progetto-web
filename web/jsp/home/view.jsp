@@ -42,10 +42,6 @@
       <div id="site_content">
         <div class="sidebar">
           <%@include file="/include/sidebar.jsp"%>
-          <%if (loggedUser.getAdmin().equals("S")) {%>
-          <h3>Amministrazione</h3>
-          <button type="button">Aggiungi prodotto</button>
-          <%}%>
         </div>
         <div id="content">
           <!-- insert the page content here -->

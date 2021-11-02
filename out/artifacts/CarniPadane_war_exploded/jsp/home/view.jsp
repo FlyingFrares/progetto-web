@@ -40,7 +40,9 @@
     <%@include file="/include/header.jsp"%>
     <main class="clearfix">
       <div id="site_content">
-       <%@include file="/include/sidebar.jsp"%>
+        <div class="sidebar">
+          <%@include file="/include/sidebar.jsp"%>
+        </div>
         <div id="content">
           <!-- insert the page content here -->
           <div class="slideshow-container">
