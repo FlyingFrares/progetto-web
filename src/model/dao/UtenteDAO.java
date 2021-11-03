@@ -28,6 +28,8 @@ public interface UtenteDAO {
 	
 	public Utente findByEmail(String email);
 	
+	public List<Utente> findByString (String searchString);
+	
 	public List<Utente> findAll();
 	
 }

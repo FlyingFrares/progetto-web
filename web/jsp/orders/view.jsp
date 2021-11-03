@@ -22,15 +22,7 @@
     <style>
       table {
         border-collapse: collapse;
-        width: 1280px;
-      }
-      .button {
-        text-align: center;
-        font-size: 28px;
-        padding: 15px;
-        transition: all 0.5s;
-        cursor: pointer;
-        margin: 0px;
+        width: -webkit-fill-available;
       }
 
       .button span {
@@ -62,30 +54,28 @@
     <%@include file="/include/header.jsp"%>
     <main class="clearfix">
       <div id="site_content">
-        <div id="content">
-          <table>
-            <tr>
-              <th>ID Ordine</th>
-              <th>Data</th>
-              <th>Destinatario</th>
-              <th>Indirizzo di spedizione</th>
-              <th>Totale</th>
-              <th>Numero carta</th>
-              <th>Stato</th>
-            </tr>
-            <%for (i = 0; i<ordini.size(); i++) {%>
-            <tr>
-              <td><%=ordini.get(i).getOrderID()%></td>
-              <td><%=ordini.get(i).getData()%></td>
-              <td><%=ordini.get(i).getDestinatario()%></td>
-              <td><%=ordini.get(i).getIndirizzo()%></td>
-              <td><%=ordini.get(i).getTotale()%> &euro;</td>
-              <td><%=ordini.get(i).getIDpagamento()%></td>
-              <td><%=ordini.get(i).getStato()%></td>
-            </tr>
-            <%}%>
-          </table>
-        </div>
+        <table>
+          <tr>
+            <th>ID Ordine</th>
+            <th>Data</th>
+            <th>Destinatario</th>
+            <th>Indirizzo di spedizione</th>
+            <th>Totale</th>
+            <th>Numero carta</th>
+            <th>Stato</th>
+          </tr>
+          <%for (i = 0; i<ordini.size(); i++) {%>
+          <tr>
+            <td><%=ordini.get(i).getOrderID()%></td>
+            <td><%=ordini.get(i).getData()%></td>
+            <td><%=ordini.get(i).getDestinatario()%></td>
+            <td><%=ordini.get(i).getIndirizzo()%></td>
+            <td><%=ordini.get(i).getTotale()%> &euro;</td>
+            <td><%=ordini.get(i).getIDpagamento()%></td>
+            <td><%=ordini.get(i).getStato()%></td>
+          </tr>
+          <%}%>
+        </table>
       </div>
     </main>
     <%@include file="/include/footer.jsp"%>

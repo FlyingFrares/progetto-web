@@ -96,6 +96,9 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 	@Override
 	public List<Utente> findAll() { throw new UnsupportedOperationException("Not supported yet."); }
 	
+	@Override
+	public List<Utente> findByString(String searchString) { throw new UnsupportedOperationException("Not supported yet."); }
+	
 	private String encode(Utente loggedUser) {
 		
 		String encodedLoggedUser;

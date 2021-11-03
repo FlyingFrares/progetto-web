@@ -43,7 +43,7 @@
   <style>
     table {
       border-collapse: collapse;
-      width: 1280px;
+      width: -webkit-fill-available;
     }
     .button {
       text-align: center;
@@ -83,46 +83,44 @@
 <%@include file="/include/header.jsp"%>
 <main class="clearfix">
   <div id="site_content">
-    <div id="content">
-      <h1>Ordini di <%=utente.getUsername()%></h1>
-      <table>
-        <tr>
-          <th>ID Ordine</th>
-          <th>Data</th>
-          <th>Destinatario</th>
-          <th>Indirizzo di spedizione</th>
-          <th>Totale</th>
-          <th>Numero carta</th>
-          <th>Stato</th>
-          <th>Cancella</th>
-          <th>Modifica</th>
-        </tr>
-        <%for (i = 0; i<ordini.size(); i++) {%>
-        <tr>
-          <td><%=ordini.get(i).getOrderID()%></td>
-          <td><%=ordini.get(i).getData()%></td>
-          <td><%=ordini.get(i).getDestinatario()%></td>
-          <td><%=ordini.get(i).getIndirizzo()%></td>
-          <td><%=ordini.get(i).getTotale()%> &euro;</td>
-          <td><%=ordini.get(i).getIDpagamento()%></td>
-          <td><%=ordini.get(i).getStato()%></td>
-          <td>
-            <button class="button" onclick="deleteOrder(<%=ordini.get(i).getOrderID()%>)"><span></span></button>
-          </td>
-          <td>
-            <button class="button" onclick="modifyOrder(<%=ordini.get(i).getOrderID()%>)"><span></span></button>
-          </td>
-        </tr>
+    <h1>Ordini di <%=utente.getUsername()%></h1>
+    <table>
+      <tr>
+        <th>ID Ordine</th>
+        <th>Data</th>
+        <th>Destinatario</th>
+        <th>Indirizzo di spedizione</th>
+        <th>Totale</th>
+        <th>Numero carta</th>
+        <th>Stato</th>
+        <th>Cancella</th>
+        <th>Modifica</th>
+      </tr>
+      <%for (i = 0; i<ordini.size(); i++) {%>
+      <tr>
+        <td><%=ordini.get(i).getOrderID()%></td>
+        <td><%=ordini.get(i).getData()%></td>
+        <td><%=ordini.get(i).getDestinatario()%></td>
+        <td><%=ordini.get(i).getIndirizzo()%></td>
+        <td><%=ordini.get(i).getTotale()%> &euro;</td>
+        <td><%=ordini.get(i).getIDpagamento()%></td>
+        <td><%=ordini.get(i).getStato()%></td>
+        <td>
+          <button class="button" onclick="deleteOrder(<%=ordini.get(i).getOrderID()%>)"><span></span></button>
+        </td>
+        <td>
+          <button class="button" onclick="modifyOrder(<%=ordini.get(i).getOrderID()%>)"><span></span></button>
+        </td>
+      </tr>
+      <%}%>
+    </table>
+    <div class="container">
+      <select name="utente" onchange="selectUser(this.value)">
+        <option hidden>Cambia utente</option>
+        <%for (i = 0; i<utenti.size(); i++) {%>
+        <option value="<%=utenti.get(i).getUserID()%>"><%=utenti.get(i).getUsername()%></option>
         <%}%>
-      </table>
-      <div class="container">
-        <select name="utente" onchange="selectUser(this.value)">
-          <option hidden>Cambia utente</option>
-          <%for (i = 0; i<utenti.size(); i++) {%>
-          <option value="<%=utenti.get(i).getUserID()%>"><%=utenti.get(i).getUsername()%></option>
-          <%}%>
-        </select><br>
-      </div>
+      </select><br>
     </div>
   </div>
 </main>

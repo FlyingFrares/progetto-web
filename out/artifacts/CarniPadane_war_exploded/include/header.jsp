@@ -57,7 +57,7 @@
       <%}%>
       <% if (loggedUser.getAdmin().equals("S")) {%>
       <li <%=menuActiveLink.equals("Admin")?"class=\"selected\"":""%>>
-        <a href="Dispatcher?controllerAction=Home.view">Gestionale</a>
+        <a href="Dispatcher?controllerAction=Admin.view">Utenti</a>
       </li>
       <%}%>
       <li><a href="javascript:logoutForm.submit()">Logout</a></li>
@@ -84,7 +84,7 @@
         </form>
       </section>
       <%}else{%>
-      <h1>Bentornato <%=loggedUser.getNome()%></h1>
+      <h1 style="color: #2E3138">Bentornato <%=loggedUser.getNome()%></h1>
       <%}%>
     </ul>
   </nav>

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.exception.DuplicatedObjectException;
+import model.mo.Prodotto;
 import model.mo.Utente;
 import model.dao.UtenteDAO;
 
@@ -285,6 +286,45 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 		}
 		
 		return utente;
+	}
+	
+	@Override
+	public List<Utente> findByString(String searchString) {
+		
+		PreparedStatement ps;
+		Utente utente = null;
+		ArrayList<Utente> utenti = new ArrayList<Utente>();
+		
+		try {
+			
+			String sql
+					= " SELECT * "
+					+ " FROM utente "
+					+ " WHERE "
+					+ " ( username LIKE ? OR nome LIKE ? OR cognome LIKE ? OR email LIKE ? ) "
+					+ " ORDER BY username, nome ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + searchString + "%");
+			ps.setString(2, "%" + searchString + "%");
+			ps.setString(3, "%" + searchString + "%");
+			ps.setString(4, "%" + searchString + "%");
+			
+			ResultSet resultSet = ps.executeQuery();
+			
+			while (resultSet.next()) {
+				utente = read(resultSet);
+				utenti.add(utente);
+			}
+			
+			resultSet.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return utenti;
 	}
 	
 	@Override

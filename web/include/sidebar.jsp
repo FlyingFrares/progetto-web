@@ -10,7 +10,7 @@
 
 <h3>Cerca un prodotto</h3>
 <form name="searchForm" action="Dispatcher" method="post">
-  <input class="search" type="text" id="search" name="search" placeholder="Ricerca" maxlength="40" required>
+  <input class="search" type="text" id="search" name="search" placeholder="Ricerca" maxlength="40">
   <input type="hidden" name="controllerAction" value="Category.search"/>
 </form>
 <h3>Categorie</h3>

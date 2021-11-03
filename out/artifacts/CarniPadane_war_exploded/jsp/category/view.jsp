@@ -35,6 +35,19 @@
 <html>
   <head>
     <%@include file="/include/htmlHead.jsp"%>
+    <style>
+      .product-info {
+        float: left;
+        height: 420px;
+        width: 350px;
+        margin: 10px;
+        border-radius: 10px 10px 10px 10px;
+        background-color: #ffffff;
+        -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+      }
+    </style>
   </head>
   <body>
     <%@include file="/include/header.jsp"%>
@@ -42,13 +55,15 @@
       <div id="site_content">
         <div class="sidebar">
           <%@include file="/include/sidebar.jsp"%>
-          <%if (loggedUser.getAdmin().equals("S")) {%>
+          <%if (loggedOn && loggedUser.getAdmin().equals("S")) {%>
           <h3>Amministrazione</h3>
           <button type="button" onclick="createProduct()">Aggiungi prodotto</button>
           <%}%>
         </div>
         <div id="content">
-        <%for (i = 0; i<prodotti.size(); i++) {%>
+          <%if (prodotti.size() == 0) {%>
+          <img src="images/404.png" width="800px">
+          <%}for (i = 0; i<prodotti.size(); i++) {%>
           <div class="product-info">
             <div class="product-text">
               <h1><%=prodotti.get(i).getNomeProdotto()%></h1>
@@ -57,7 +72,7 @@
                 Disponibilit&agrave : <%=prodotti.get(i).getMagazzino()%><br>
                 Prezzo/Kg : <%=prodotti.get(i).getPrezzoKg()%> &euro;<br>
                 Peso : <%=prodotti.get(i).getPeso()%> Kg
-                <%if (loggedUser.getAdmin().equals("S")) {%>
+                <%if (loggedOn && loggedUser.getAdmin().equals("S")) {%>
                 <button type="button" onclick="modifyProduct(<%=prodotti.get(i).getProductID()%>)">Modifica</button>
                 <%}%>
               </p>
