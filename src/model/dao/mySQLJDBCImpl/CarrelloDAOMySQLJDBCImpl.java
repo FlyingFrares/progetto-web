@@ -94,38 +94,12 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 	}
 	
 	@Override
-	public void update(Carrello carrello) throws DuplicatedObjectException {
+	public void update(Carrello carrello) {
 		
 		PreparedStatement ps;
 		
 		try {
-			
 			String sql
-					= " SELECT cartID "
-					+ " FROM carrello "
-					+ " WHERE productID = ? AND "
-					+ " userID = ? AND "
-					+ " quantità = ? AND "
-					+ " cartID <> ? ";
-			
-			ps = conn.prepareStatement(sql);
-			int i = 1;
-			ps.setInt(i++, carrello.getProduct().getProductID());
-			ps.setInt(i++, carrello.getUser().getUserID());
-			ps.setInt(i++, carrello.getQuantita());
-			ps.setInt(i++, carrello.getCartID());
-			
-			ResultSet resultSet = ps.executeQuery();
-			
-			boolean exist;
-			exist = resultSet.next();
-			resultSet.close();
-			
-			if (exist) {
-				throw new DuplicatedObjectException("DettaglioDAOMySQLJDBCImpl.update: Tentativo di aggiornamento in un elemento già esistente.");
-			}
-			
-			sql
 					= " UPDATE carrello "
 					+ " SET "
 					+ " userID = ?, "
@@ -134,7 +108,7 @@ public class CarrelloDAOMySQLJDBCImpl implements CarrelloDAO {
 					+ " WHERE cartID = ? ";
 			
 			ps = conn.prepareStatement(sql);
-			i = 1;
+			int i = 1;
 			ps.setInt(i++, carrello.getUser().getUserID());
 			ps.setInt(i++, carrello.getProduct().getProductID());
 			ps.setInt(i++, carrello.getQuantita());

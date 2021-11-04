@@ -82,7 +82,7 @@
               <form name="updateForm" action="Dispatcher" method="post">
                 <input type="number" style="width: 40px" name="qty" value="<%=carrelli.get(i).getQuantita()%>" min="1" step="1" max="<%=carrelli.get(i).getProduct().getMagazzino()%>" required>
                 <input type="hidden" name="cartID" value="<%=carrelli.get(i).getCartID()%>">
-                <input type="hidden" name="controllerAction" value="Cart.modify"/>
+                <input type="hidden" name="controllerAction" value="Cart.update"/>
                 <input type="submit" style="margin-left: 5px" value="Aggiorna">
               </form>
             </div>

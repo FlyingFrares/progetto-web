@@ -79,7 +79,7 @@ public class Cart {
 		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;
 		Utente loggedUser;
-		
+		String applicationMessage = null;
 		Logger logger = LogService.getApplicationLogger();
 		
 		try {
@@ -96,14 +96,33 @@ public class Cart {
 			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
 			daoFactory.beginTransaction();
 			
-			commonView(daoFactory, sessionDAOFactory, request, loggedUser);
+			List<Carrello> carrelli;
+			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+			carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
+			request.setAttribute("carrelli", carrelli);
+			String s = "checkout";
+			int i = 0;
+			
+			/* Blocco per la gestione di prodotti già aggiunti al carrello ma non più disponibili in fase di checkout */
+			
+			while (i<carrelli.size() && s.equals("checkout")){
+				
+				ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+				Prodotto prodotto = prodottoDAO.findByProductId(carrelli.get(i).getProduct().getProductID());
+				if(carrelli.get(i).getQuantita() > prodotto.getMagazzino()) {
+					s = "view";
+					applicationMessage = prodotto.getNomeProdotto() + " è disponibile nelle seguenti quantità : " + prodotto.getMagazzino();
+				}
+				i++;
+			}
 			
 			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
 			
 			request.setAttribute("loggedOn", loggedUser != null);
 			request.setAttribute("loggedUser", loggedUser);
-			request.setAttribute("viewUrl", "cart/checkout");
+			request.setAttribute("applicationMessage", applicationMessage);
+			request.setAttribute("viewUrl", "cart/"+s);
 			
 			/* Blocco Standard per la gestione degli errori */
 		} catch (Exception e) {
@@ -166,29 +185,28 @@ public class Cart {
 						IDpagamento,
 						intestatario);
 				
+				/* Blocco di gestione magazzino */
+				
+				List<Carrello> carrelli;
+				CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
+				carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
+				for (int i = 0; i<carrelli.size(); i++)
+				{
+					Carrello carrello = carrelli.get(i);
+					ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
+					Prodotto prodotto = prodottoDAO.findByProductId(carrello.getProduct().getProductID());
+					int magazzino = prodotto.getMagazzino() - carrello.getQuantita();
+					prodotto.setMagazzino(magazzino);
+					prodottoDAO.update(prodotto);
+					carrelloDAO.delete(carrello.getCartID());
+				}
+				
 				applicationMessage = "Ordine confermato";
 				
 			}catch (DuplicatedObjectException e) {
 				applicationMessage = "Ordine non confermato";
 				logger.log(Level.INFO, "Errore Ordine");
 			}
-			
-			/* Blocco di gestione magazzino */
-			
-			List<Carrello> carrelli;
-			CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
-			carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
-			for (int i = 0; i<carrelli.size(); i++)
-			{
-				Carrello carrello = carrelli.get(i);
-				ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
-				Prodotto prodotto = prodottoDAO.findByProductId(carrello.getProduct().getProductID());
-				int magazzino = prodotto.getMagazzino() - carrello.getQuantita();
-				prodotto.setMagazzino(magazzino);
-				prodottoDAO.update(prodotto);
-				carrelloDAO.delete(carrello.getCartID());
-			}
-			
 			
 			daoFactory.commitTransaction();
 			sessionDAOFactory.commitTransaction();
@@ -216,8 +234,7 @@ public class Cart {
 		
 	}
 	
-	
-	public static void modify(HttpServletRequest request, HttpServletResponse response) {
+	public static void update(HttpServletRequest request, HttpServletResponse response) {
 		
 		DAOFactory sessionDAOFactory = null;
 		DAOFactory daoFactory = null;

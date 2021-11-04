@@ -14,7 +14,7 @@ public interface CarrelloDAO {
 			Prodotto prodotto,
 			int quantità) throws DuplicatedObjectException;
 	
-	public void update(Carrello carrello) throws DuplicatedObjectException;
+	public void update(Carrello carrello);
 	
 	public void delete(int cartID);
 	
