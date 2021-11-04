@@ -363,7 +363,7 @@ public class Category {
 			
 			request.setAttribute("loggedOn", loggedUser != null);
 			request.setAttribute("loggedUser", loggedUser);
-			request.setAttribute("viewUrl", "category/admin/createProduct");
+			request.setAttribute("viewUrl", "category/admin/modifyProduct");
 			
 			/* Blocco Standard per la gestione degli errori */
 		} catch (Exception e) {
