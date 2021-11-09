@@ -140,7 +140,8 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 					+ " password = ?, "
 					+ " nome = ?, "
 					+ " cognome = ?, "
-					+ " email = ? "
+					+ " email = ?, "
+					+ " username = ?"
 					+ " WHERE "
 					+ " userID = ? ";
 			
@@ -152,6 +153,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 			ps.setString(i++, utente.getCognome());
 			ps.setString(i++, utente.getEmail());
 			ps.setString(i++, utente.getUsername());
+			ps.setInt(i++, utente.getUserID());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {

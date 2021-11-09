@@ -3,7 +3,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 
-
 <%
   int i = 0;
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -12,6 +11,17 @@
   String menuActiveLink = "Admin";
   List<Utente> utenti = (List<Utente>) request.getAttribute("utenti");
 %>
+
+<script>
+  function createAccount() {
+      document.createUserForm.submit();
+  }
+  function modifyAccount(userID) {
+      let id = document.getElementById('modify');
+      id.setAttribute('value', userID);
+      document.modifyUserForm.submit();
+  }
+</script>
 
 <!DOCTYPE html>
 <html>
@@ -49,24 +59,38 @@
             <h2><%=utenti.get(i).getUsername()%></h2>
             <%if (utenti.get(i).getAdmin().equals("S")) {%>
             <h4 style="color: #99CEFF">Admin</h4>
-            <%}else{%>
+            <%} else if (utenti.get(i).getAdmin().equals("B")) {%>
+            <h4 style="color: #CDB4DB">Bloccato</h4>
+            <%} else {%>
             <h4 style="color: #FFC2D6">Utente</h4>
             <%}%>
 
             <span><%=utenti.get(i).getNome()%> <%=utenti.get(i).getCognome()%></span><br>
             <span><%=utenti.get(i).getEmail()%></span>
             <div class="svg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
-                <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
-                <line x1="16" y1="5" x2="19" y2="8" />
-              </svg>
+              <a href="javascript:modifyAccount(<%=utenti.get(i).getUserID()%>)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                  <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                  <line x1="16" y1="5" x2="19" y2="8" />
+                </svg>
+              </a>
             </div>
           </article>
           <%}%>
         </div>
       </div>
+
+      <form name="createUserForm" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Admin.createUserView"/>
+      </form>
+
+      <form name="modifyUserForm" action="Dispatcher" method="post">
+        <input type="hidden" id="modify" name="userID"/>
+        <input type="hidden" name="controllerAction" value="Admin.modifyUserView"/>
+      </form>
+
     </main>
   </body>
 </html>

@@ -6,8 +6,6 @@
 <%@ page import="model.mo.Ordine" %>
 
 <%
-  int i = 0;
-  BigDecimal total = new BigDecimal(0);
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
   Utente loggedUser = (Utente) request.getAttribute("loggedUser");
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
@@ -61,6 +59,7 @@
       border-radius: 3px;
       cursor: pointer;
       font-size: 17px;
+      justify-content: center;
     }
 
     .btn:hover {
@@ -69,18 +68,6 @@
 
     .delbtn {
       background-color: #99CEFF;
-      color: black;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      width: 100%;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 17px;
-    }
-
-    .delbtn:hover {
-      background-color:#CDB4DB;
     }
   </style>
 </head>
@@ -122,7 +109,7 @@
           <form name="discardForm" action="Dispatcher" method="post">
             <input type="hidden" name="userID" value="<%=ordine.getUser().getUserID()%>">
             <input type="hidden" name="controllerAction" value="Orders.adminView">
-            <input type="submit" value="annulla" class="delbtn">
+            <input type="submit" value="annulla" class="btn delbtn">
           </form>
         </div>
       </div>
