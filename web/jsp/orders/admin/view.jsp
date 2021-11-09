@@ -127,6 +127,7 @@
 
 <form name="deleteOrderForm" action="Dispatcher" method="post">
   <input type="hidden" id="del" name="orderID"/>
+  <input type="hidden" name="userID" value="<%=utente.getUserID()%>">
   <input type="hidden" name="controllerAction" value="Orders.deleteOrder"/>
 </form>
 

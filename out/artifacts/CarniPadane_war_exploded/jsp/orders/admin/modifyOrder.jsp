@@ -120,6 +120,7 @@
             <input type="submit" value="conferma" class="btn">
           </form>
           <form name="discardForm" action="Dispatcher" method="post">
+            <input type="hidden" name="userID" value="<%=ordine.getUser().getUserID()%>">
             <input type="hidden" name="controllerAction" value="Orders.adminView">
             <input type="submit" value="annulla" class="delbtn">
           </form>
