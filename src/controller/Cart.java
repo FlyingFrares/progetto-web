@@ -3,10 +3,7 @@ package controller;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import model.dao.*;
 import model.dao.exception.DuplicatedObjectException;
-import model.mo.Carrello;
-import model.mo.Ordine;
-import model.mo.Prodotto;
-import model.mo.Utente;
+import model.mo.*;
 import services.config.Configuration;
 import services.log.LogService;
 
@@ -177,22 +174,26 @@ public class Cart {
 			OrdineDAO ordineDAO = daoFactory.getOrdineDAO();
 			
 			try {
-				ordineDAO.create(
-						loggedUser,
-						destinatario,
-						indirizzo,
-						totale,
-						IDpagamento,
-						intestatario);
+				Ordine ordine =	ordineDAO.create(
+								loggedUser,
+								destinatario,
+								indirizzo,
+								totale,
+								IDpagamento,
+								intestatario);
 				
 				/* Blocco di gestione magazzino */
 				
 				List<Carrello> carrelli;
 				CarrelloDAO carrelloDAO = daoFactory.getCarrelloDAO();
 				carrelli = carrelloDAO.findByUserID(loggedUser.getUserID());
+				
+				DettaglioDAO dettaglioDAO = daoFactory.getDettagliDAO();
+				
 				for (int i = 0; i<carrelli.size(); i++)
 				{
 					Carrello carrello = carrelli.get(i);
+					dettaglioDAO.create(ordine,carrello.getProduct() , carrello.getQuantita());
 					ProdottoDAO prodottoDAO = daoFactory.getProdottoDAO();
 					Prodotto prodotto = prodottoDAO.findByProductId(carrello.getProduct().getProductID());
 					int magazzino = prodotto.getMagazzino() - carrello.getQuantita();
