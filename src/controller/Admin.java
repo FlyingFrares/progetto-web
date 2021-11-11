@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import model.dao.OrdineDAO;
 import model.dao.ProdottoDAO;
 import model.dao.exception.DuplicatedObjectException;
 import model.mo.Prodotto;
@@ -337,6 +338,60 @@ public class Admin {
 			}catch (DuplicatedObjectException e) {
 				logger.log(Level.INFO, "Errore Modifica Prodotto");
 			}
+			
+			commonView(daoFactory, sessionDAOFactory, request);
+			
+			daoFactory.commitTransaction();
+			sessionDAOFactory.commitTransaction();
+			
+			request.setAttribute("loggedOn", loggedUser != null);
+			request.setAttribute("loggedUser", loggedUser);
+			request.setAttribute("viewUrl", "admin/view");
+			
+			/* Blocco Standard per la gestione degli errori */
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Controller Error", e);
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+			} catch (Throwable t) {
+			}
+			throw new RuntimeException(e);
+			
+		} finally {
+			try {
+				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+			} catch (Throwable t) {
+			}
+		}
+		
+	}
+	
+	public static void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+		
+		DAOFactory sessionDAOFactory = null;
+		DAOFactory daoFactory = null;
+		Utente loggedUser;
+		
+		Logger logger = LogService.getApplicationLogger();
+		
+		try {
+			
+			Map sessionFactoryParameters = new HashMap<String, Object>();
+			sessionFactoryParameters.put("request", request);
+			sessionFactoryParameters.put("response", response);
+			sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL, sessionFactoryParameters);
+			sessionDAOFactory.beginTransaction();
+			
+			UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+			loggedUser = sessionUserDAO.findLoggedUser();
+			
+			daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL, null);
+			daoFactory.beginTransaction();
+			
+			int userID = Integer.parseInt(request.getParameter("userID"));
+			UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
+			Utente utente = utenteDAO.findByUserID(userID);
+			utenteDAO.delete(utente);
 			
 			commonView(daoFactory, sessionDAOFactory, request);
 			

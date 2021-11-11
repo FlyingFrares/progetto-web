@@ -2,7 +2,6 @@
 <%@page import="model.mo.Utente"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page import="java.math.BigDecimal" %>
 <%@ page import="model.mo.Ordine" %>
 
 <%

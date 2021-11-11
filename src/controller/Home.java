@@ -92,6 +92,10 @@ public class Home {
 				sessionUserDAO.delete(null);
 				applicationMessage = "Username e password errati!";
 				loggedUser = null;
+			} else if (user.getAdmin().equals("B")){
+				sessionUserDAO.delete(null);
+				applicationMessage = "Sei stato Bloccato!";
+				loggedUser = null;
 			} else {
 				loggedUser = sessionUserDAO.create(user.getUserID(), user.getUsername(), user.getAdmin(), null, user.getNome(), user.getCognome(), null);
 			}

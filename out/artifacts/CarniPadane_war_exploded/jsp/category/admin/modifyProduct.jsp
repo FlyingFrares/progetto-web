@@ -2,11 +2,9 @@
 <%@page import="model.mo.Utente"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page import="java.math.BigDecimal" %>
 <%@ page import="model.mo.Prodotto" %>
 
 <%
-  BigDecimal total = new BigDecimal(0);
   boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
   Utente loggedUser = (Utente) request.getAttribute("loggedUser");
   String applicationMessage = (String) request.getAttribute("applicationMessage");   /* Stringa passata dal Controller */
