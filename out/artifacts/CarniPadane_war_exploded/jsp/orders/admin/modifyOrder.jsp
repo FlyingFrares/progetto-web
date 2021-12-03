@@ -96,6 +96,7 @@
                   <option value="Pagato">Pagato</option>
                   <option value="Spedito">Spedito</option>
                   <option value="Consegnato">Consegnato</option>
+                  <option value="Annullato">Annullato</option>
                 </select>
               </div>
 

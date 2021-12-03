@@ -222,6 +222,7 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 .sidebar
 { float: right;
     width: 250px;
+    height: 100%;
     padding: 0 15px 20px 15px;}
 
 .sidebar button
