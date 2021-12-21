@@ -21,7 +21,7 @@ public class MySQLJDBCDAOFactory extends DAOFactory {
 	
 	@Override
 	public void beginTransaction() {
-		
+		/* Apro la connessione al DB */
 		try {
 			Class.forName(Configuration.DATABASE_DRIVER);
 			this.connection = DriverManager.getConnection(Configuration.DATABASE_URL);
