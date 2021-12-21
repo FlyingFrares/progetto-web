@@ -53,10 +53,11 @@ public class Cart {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "cart/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -64,6 +65,7 @@ public class Cart {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -121,10 +123,11 @@ public class Cart {
 			request.setAttribute("applicationMessage", applicationMessage);
 			request.setAttribute("viewUrl", "cart/"+s);
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -132,6 +135,7 @@ public class Cart {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -217,10 +221,11 @@ public class Cart {
 			request.setAttribute("applicationMessage", applicationMessage);
 			request.setAttribute("viewUrl", "home/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -228,6 +233,7 @@ public class Cart {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -273,10 +279,11 @@ public class Cart {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "cart/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -284,6 +291,7 @@ public class Cart {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -326,10 +334,11 @@ public class Cart {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "cart/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -337,6 +346,7 @@ public class Cart {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}

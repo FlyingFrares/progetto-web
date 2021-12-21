@@ -54,10 +54,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -65,6 +66,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -104,10 +106,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -115,6 +118,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -175,10 +179,11 @@ public class Category {
 			request.setAttribute("applicationMessage", applicationMessage);
 			request.setAttribute("viewUrl", "category/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -186,6 +191,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -227,10 +233,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/admin/modifyProduct");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -238,6 +245,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -318,10 +326,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -329,6 +338,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -365,10 +375,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/admin/modifyProduct");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -376,6 +387,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -438,10 +450,11 @@ public class Category {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "category/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -449,6 +462,7 @@ public class Category {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}

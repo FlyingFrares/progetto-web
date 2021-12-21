@@ -53,10 +53,11 @@ public class Orders {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "orders/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -64,6 +65,7 @@ public class Orders {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -106,10 +108,11 @@ public class Orders {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "orders/admin/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -117,6 +120,7 @@ public class Orders {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -155,10 +159,11 @@ public class Orders {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "orders/admin/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -166,6 +171,7 @@ public class Orders {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -207,10 +213,11 @@ public class Orders {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "orders/admin/modifyOrder");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -218,6 +225,7 @@ public class Orders {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}
@@ -281,10 +289,11 @@ public class Orders {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "orders/admin/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
+				if (daoFactory != null) daoFactory.rollbackTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
 			} catch (Throwable t) {
 			}
@@ -292,6 +301,7 @@ public class Orders {
 			
 		} finally {
 			try {
+				if (daoFactory != null) daoFactory.closeTransaction();
 				if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
 			} catch (Throwable t) {
 			}

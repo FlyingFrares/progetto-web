@@ -41,7 +41,7 @@ public class Home {
 			request.setAttribute("loggedUser", loggedUser);
 			request.setAttribute("viewUrl", "home/view");
 			
-			/* Blocco Standard per la gestione degli errori */
+			/* Blocco Standard per la gestione degli errori: Cookie */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
@@ -108,6 +108,7 @@ public class Home {
 			request.setAttribute("applicationMessage", applicationMessage);
 			request.setAttribute("viewUrl", "home/view");
 			
+			/* Blocco Standard per la gestione degli errori: Cookie + DB */
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Controller Error", e);
 			try {
