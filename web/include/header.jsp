@@ -26,7 +26,7 @@
 
   <div id="logo">
     <div id="logo_text">
-      <h1><a href="index.html"><span class="logo_colour">Carni</span>Padane</a></h1>
+      <h1><a href="#top"><span class="logo_colour">Carni</span>Padane</a></h1>
       <h2>Il valore del prodotto artigianale</h2>
     </div>
     <img src="images/piglet.png" id="logo_img">
