@@ -19,7 +19,7 @@ public class Configuration {
   
   /* Logger Configuration */
   public static final String GLOBAL_LOGGER_NAME="CarniPadane";
-  public static final String GLOBAL_LOGGER_FILE="D:\\Documenti\\UniFE\\Progetto\\Zambrini\\log\\log.%g.%u.txt";
+  public static final String GLOBAL_LOGGER_FILE="D:\\Documenti\\UniFE\\III Anno\\Progetto\\Zambrini\\log\\log.%g.%u.txt";
   public static final Level GLOBAL_LOGGER_LEVEL=Level.ALL;
 
 }
