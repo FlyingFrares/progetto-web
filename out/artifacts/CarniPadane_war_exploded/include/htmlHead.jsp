@@ -10,7 +10,7 @@
     <%}%>
     function onLoadHandler() {
         headerOnLoadHandler(); /* Metodo implementato in header.jsp */
-        try { mainOnLoadHandler(); } catch (e) {}
+        //try { mainOnLoadHandler(); } catch (e) {}
         if (applicationMessage!=undefined) alert(applicationMessage); /* popup al caricamento della pagina */
     }
     window.addEventListener("load", onLoadHandler);

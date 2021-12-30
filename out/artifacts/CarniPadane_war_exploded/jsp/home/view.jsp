@@ -88,7 +88,11 @@
                   </div>
                   <div class="product-price-btn">
                     <p>11.50 &euro;</p>
-                    <button type="button" onclick='addToCart(24)'>Acquista</button>
+                    <% if(!loggedOn) { %>
+                    <button type="button" onclick="requestLogin()">Acquista</button>
+                    <% } else { %>
+                    <button type="button" onclick='addToCart(31)'>Acquista</button>
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -110,7 +114,11 @@
                   </div>
                   <div class="product-price-btn">
                     <p>110.00 &euro;</p>
-                    <button type="button" onclick='addToCart(8)'>Acquista</button>
+                    <% if(!loggedOn) { %>
+                    <button type="button" onclick="requestLogin()">Acquista</button>
+                    <% } else { %>
+                    <button type="button" onclick='addToCart(31)'>Acquista</button>
+                    <% } %>
                   </div>
                 </div>
               </div>
